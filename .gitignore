@@ -1,0 +1,12 @@
+build/*
+!build/bootloader
+!build/esp32_nat_router.bin
+!build/partitions_example.bin
+.pio*
+.vscode
+.vscode/*
+!sdkconfig.*
+!sdkconfig.defaults
+components/web_server/www/output/html/
+release/
+pytest/

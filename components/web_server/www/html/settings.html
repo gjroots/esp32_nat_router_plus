@@ -1,0 +1,189 @@
+---
+title: settings.title
+js: settings
+no-container: true
+layout: page
+---
+
+<div id="settings" class="container">	
+	<div class="card-container">
+		<div class="settingsHeader">{% t settings.card-1.header %}</div>
+		<div class="card-small smaller">
+			<div class="row">
+				<div class="col-12">
+					<label for="darkMode" class="checkboxContainer">
+						{% t settings.card-1.toggle-1 %}
+						<input type="checkbox" name="darkMode" id="darkMode" value="false">
+						<label class="checkbox" for="darkMode"></label>
+					</label>
+				</div>
+				<div class="col-12">
+					<label for="useLed" class="checkboxContainer">{% t settings.card-1.toggle-2 %}
+						<input type="checkbox" name="useLed" id="useLed" value="false">
+						<label class="checkbox" for="useLed"></label>
+					</label>
+				</div>
+				<div class="col-12">
+					<label for="cache" class="checkboxContainer">{% t settings.card-1.toggle-3 %}
+						<input type="checkbox" name="webServer" id="webServer" value="false">
+						<label class="checkbox" for="webServer"> </label>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div> 
+    
+	<div class="card-container">
+		<div class="settingsHeader">{% t settings.card-2.header %}</div>
+		<div class="card-small smaller">
+			<div class="row">
+				<div class="col-12">
+					<div class="input-container">
+						<input placeholder=" " id="adminUsername" type="text" required="" minlength="1" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+						<label for="adminUsername">{% t settings.card-2.field-1 %}</label>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="input-container">
+						<input placeholder=" " id="adminPassword" type="text" required="" minlength="8" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+						<label for="adminPassword">{% t settings.card-2.field-2 %}</label>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="input-container">
+						<input placeholder=" " id="maxLoginAttempts" type="number" required="" min="1" max="14">
+						<label for="maxLoginAttempts">{% t settings.card-2.field-3 %}</label>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="input-container">
+						<input placeholder=" " id="blockingTimeMin" type="number" required="" min="1" max="15">
+						<label for="blockingTimeMin">{% t settings.card-2.field-4 %}</label>
+					</div>
+				</div>
+		   </div>
+	   </div>
+	</div>
+
+	<div class="card-container">
+		<div class="settingsHeader">{% t settings.card-3.header %}</div>
+		<div class="card-small smaller">
+			<div class="row">
+				<div class="col-12">
+					<div class="input-container">
+						<input placeholder=" " id="apSsid" type="text" required="" minlength="1" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+						<label for="apSsid">{% t global.ssid %}</label>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="input-container">
+						<input placeholder=" " id="apPassword" type="text" required="" minlength="8" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+						<label for="apPassword">{% t global.password %}</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card-container">
+		<div class="settingsHeader">{% t settings.card-4.header %}</div>
+		<div class="card-small smaller">
+			<div class="row">
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="ssid" type="text" required="" minlength="1" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="ssid">{% t global.ssid %}</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="password" type="text" required="" minlength="8" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="password">{% t global.password %}</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="enterprise_username" type="text" required="" minlength="0" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="enterprise_username">{% t settings.card-4.field-1 %}</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="enterprise_identity" type="text" required="" minlength="0" maxlength="32" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="enterprise_identity">{% t settings.card-4.field-2 %}</label>
+						</div>
+					</div>
+	  	       </div>
+           </div>
+        </div>
+	
+	
+	<div class="card-container">
+		<div class="settingsHeader">{% t settings.card-5.header %}</div>
+		<div class="card-small smaller">
+			<div class="row">
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="staticIP" type="text" required="" minlength="0" maxlength="16" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="staticIP">{% t settings.card-5.field-1 %}</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="subnetMask" type="text" required="" minlength="0" maxlength="16" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="subnetMask">{% t settings.card-5.field-2 %}</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="input-container">
+							<input placeholder=" " id="gateway" type="text" required="" minlength="0" maxlength="16" autocorrect="off" autocapitalize="none" spellcheck="false">
+							<label for="gateway">{% t settings.card-5.field-3 %}</label>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	     
+	<div class="card-container">
+		<div class="settingsHeader">{% t settings.card-6.header %}</div>
+		<div class="card-small smaller">
+			<div class="row">
+				<div class="col-12">
+					<div class="input-container" >
+						<input placeholder=" " id="apIP" type="text" required="" minLength="1" maxLength="16" autocorrect="off" autocapitalize="none" spellcheck="false" value="">
+						<label for="apIP" >{% t settings.card-6.field-1 %}</label>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="input-container" id="dnsIpContainer" >
+						<input placeholder=" " id="dnsIp" type="text" required="" minLength="1" maxLength="16" autocorrect="off" autocapitalize="none" spellcheck="false" value="">
+						<label for="dnsIp" >{% t settings.card-6.field-2 %}</label>
+					</div>
+				</div>
+				<div class="col-12">
+					<label for="CustomDns" class="customDns">{% t settings.card-6.toggle-1 %}
+						<input type="checkbox" name="CustomDns" id="CustomDns" value="false">
+						<label class="checkbox" for="CustomDns"></label>
+					</label>
+				</div>
+				<div class="col-12">
+					<div class="input-container" id="macContainer" style="pointer-events:none;">
+						<input placeholder="" id="macAp" type="text" required="" minLength="1" maxLength="17" autocorrect="off" autocapitalize="none" spellcheck="false">
+						<label for="macApa" >{% t settings.card-6.field-3 %}</label>
+					</div>
+				</div>
+				<div class="col-12">
+					<label for="randMacAp" class="checkboxContainer">{% t settings.card-6.toggle-2 %}
+						<input type="checkbox" name="randMacAp" id="randMacAp" value="false">
+						<label class="checkbox" for="randMacAp"></label>
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="card-container dual">
+		<button onclick="resetSettings()" class="redBtn" type="button">{% t global.reset %}</button>
+		<button class="button-primary right" onclick="saveSettings()" type="button">{% t global.save %}</button>
+	</div>
+</div>

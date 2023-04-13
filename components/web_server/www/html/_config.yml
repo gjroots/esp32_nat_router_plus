@@ -1,0 +1,33 @@
+# Exclude some folders & files
+baseurl: ""
+exclude: ["_*", "package.json", "node_modules", "Gemfile*"]
+destination: ../output/html
+
+# Language plugin
+languages: ["english"]
+# "german", "russian", "italian", "dutch", "chinese", "portuguese", "slovak", "polish", "estonian", "hebrew", "czech", "turkish", "indonesia"]
+
+
+# Jekyll tidy HTML plugin
+jekyll_tidy:
+    exclude: ["*.js"]
+
+
+# Gem plugin(s)
+plugins: [jekyll-tidy, jekyll-multiple-languages-plugin, jekyll-minifier]
+
+# Compress outputted sass
+sass:
+    style: compressed
+
+
+jekyll-minifier:
+    exclude: "*.json"
+    uglifier_args:
+        harmony: true
+
+
+# Set port
+port: 4000
+# Enable access from local network ~ not just localhost
+#host: 0.0.0.0

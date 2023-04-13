@@ -1,0 +1,158 @@
+#  _ _ _ _     _____ _ _ _ _____ 
+# | | | |_|___|  _  | | | |   | |
+# | | | | |___|   __| | | | | | |
+# |_____|_|   |__|  |_____|_|___|
+#        TRANSLATION FILE
+# 
+# Format:
+#   What is '$$'?
+#       '$$' is a variable thats replaced with HTML
+#       For example:
+#          `$$click here$$`     =>   `<a href="mypage">click here</a>`
+#          `translated by $$`   =>   `translated by sam`
+#
+#   DO NOT REMOVE THE INDENTATION!
+#       The indentation is critical to YAML, so please don't change it
+#   
+#   Try and retain the case, for example:
+#       If it is capitalized keep it capitalized
+#   
+#   What are the `translation.name` & `translation.url`?
+#       These are strings that will be added to the footer & info page
+#   
+#   I'm unsure about how to translate something / I have a question
+#       No problem! feel free to ask something over at
+#       https://wi-pwn.samdd.me/discord/
+#       
+#   What encoding should I use?
+#       UTF-8 ~ jekyll doesn't support any other encodings
+# 
+
+# translation:
+#     # Uncomment & insert your name here
+#     #name: "my-name"
+#     # Uncomment & insert a link to your Github / site
+#     #url: "https://github.com/my-name"
+
+nav:
+    scan: "Scan"
+    settings: "Settings"
+    info: "Info"
+
+global:
+    save: "Save"
+    reset: "Reset"
+    ssid: "SSID"
+    password: "Password"
+    reboot: "Reboot"
+    guide: "Guide"
+    footer: "Designed by Jaya Satish - @gjroots"
+    connect: "Connect"
+
+scan:
+    title: "Scan"
+    selectssid: "Select SSID"
+    card-1:
+        header: "Scan for networks ($$)"
+        table:
+            signal: "Signal"
+            security: "Security"
+            channel: "Ch." # Try and abbreviate, column is small
+    card-2:
+        header: "To connect, click on the SSID, If password is less than 8, it is open."        
+    strings:
+        A: "Open" 
+        B: "INFO: No Wi-Fi network selected!"
+    messages:
+        E0: "Failed to parse scan results!"
+        E1: "ERROR: Failed to scan for networks!"
+        E2: "Reconnect to Wi-Fi network" 
+        E3: "Failed to save settings!"
+        E4: "ERROR: Failed to save settings!"
+        
+
+settings:
+    title: "Settings"
+    card-1:
+        header: "Customization"
+        toggle-1: "Enable dark mode"
+        toggle-2: "Enable LED indicator"      
+        toggle-3: "Enable Web server"
+    card-2:
+        header: "Admin Settings"
+        field-1: "Username"
+        field-2: "Password"
+        field-3: "Login failed attempts"
+        field-4: "Lock-out period (minutes)"    
+    card-3:
+        header: "AP Settings"
+    card-4:
+        header: "STA Settings <br>(<i>WPA2 Enterprise: Leave it blank for regular</i>)"
+        field-1: "Enterprise Username"
+        field-2: "Enterprise Identity"
+    card-5:
+        header: "Static Settings"
+        field-1: "Static IP"
+        field-2: "Subnet Mask"
+        field-3: "Gateway" 
+    card-6:
+        header: "Advance Settings"
+        field-1: "AP IP"
+        field-2: "DNS IP"
+        field-3: "MAC address"
+        toggle-1: "Enable custom DNS"
+        toggle-2: "Random MAC address"
+
+
+    strings:
+        A: "Are you sure reset to default settings?"
+        B: "All changes will be lost!"
+    messages:
+        E0: "Failed to save settings!"
+        E1: "Failed to reset settings!"
+        E2: "ERROR: Failed to load settings.json"
+        E3: "ERROR: Failed to save settings!"  
+        E4: "ERROR: Reset the settings" 
+info:
+    title: "Info"
+    card-1:
+        header: "ESP32-NAT Router +"
+        table:
+            A: "version"
+            B: "Update"
+            C: "IP / gateway"
+    card-2:
+        header: "Connected Users ($$)"
+        table:
+            A: "ID"
+            B: "IP Address"
+            C: "MAC Adress"
+    card-3:
+        header: "Acknowledgements"
+    strings:
+        B: "OTA update"
+        C: "upload"
+        D: "Other projects"
+        E: "Report bug"
+        F: "Other projects"
+    messages: 
+        message-1: "file uploading Status: $$"
+        message-2: "OTA Update Success - Restarting"        
+        E0: "ERROR: Failed to load sysinfo.json"
+        E1: "ERROR: OTA update ERROR"        
+    
+error:
+    title: "404"
+    page-header: "Page not found"
+
+errors:
+    bad-response: "ERROR: Bad response"
+    E11: "Reconnect and reload this page" 
+    E12: "Reconnect to Wi-Fi network"
+    E13: "Failed to restart Router!"
+    E14: "Didn't receive a response!" 
+    E15: "Reconnect and reload this page" 
+    S1: "Are you sure you want to reboot Wi-PWN?"
+    S2: "Wi-Fi network Connected"
+    S3: "Wi-Fi network Connected Reloading...."
+  

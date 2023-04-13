@@ -1,0 +1,43 @@
+---
+title: scan.title
+inline-js: var u = window.location.href; - 1 != u.indexOf("?minimal=true") && (document.body.id = "minimal", document.cookie = "minimal=true");
+js: scan
+layout: page
+---
+<div class="card-container">
+  <div
+    class="settingsHeader button-header"
+    style="display: inline-block; margin-bottom: 30px">
+    {{site.translations[site.lang].scan.card-1.header | replace_first: '$$',
+    '<span id="networksFound"></span>'}}
+  </div>
+  <button onclick="scan()" id="apScanStart" class="right button-primary button-header">{% t nav.scan %}</button>
+  <div class="card">
+    <table id="apscan"></table>
+    <div class="card-action">
+    <div class="settingsHeader center"><i class="red">{% t scan.card-2.header %}</i></div>
+		<div>
+			<table>
+				<tbody>
+					<tr>
+						<td ><label id = "ssid" type ="text" class="input">{% t scan.selectssid %}</label></td>
+						<td class="red">
+							<div class="input-container">
+								<input placeholder="Password" id="password" type="text" required="" min="0" max="20" >
+							</div>
+						</td>
+						<td>
+							<button class="button-primary right" onclick="connect()" >
+								{% t global.connect %}
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+    </div>
+    <div class="network-info">
+      <div id="apMAC"></div>
+    </div>
+  </div>
+</div>

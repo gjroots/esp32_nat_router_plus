@@ -1,0 +1,76 @@
+{
+  "aps": [
+    {
+      "c": 10,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 1",
+      "r": -90,
+      "e": 0,
+      "h": 1
+    },
+    {
+      "c": 9,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 2",
+      "r": -79,
+      "e": 2,
+      "h": 1
+    },
+    {
+      "c": 10,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 3",
+      "r": -20,
+      "e": 3,
+      "h": 0
+    },
+    {
+      "c": 10,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 4",
+      "r": -70,
+      "e": 4,
+      "h": 0
+    },
+    {
+      "c": 10,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 5",
+      "r": -5,
+      "e": 1,
+      "h": 0
+    },
+    {
+      "c": 10,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 6",
+      "r": -80,
+      "e": 0,
+      "h": 0
+    },
+    {
+      "c": 10,
+      "m": "EXAMPLE MAC",
+      "ss": "Example network 7",
+      "r": -5,
+      "e": 1,
+      "h": 0
+    },
+    {
+      "c": 6,
+      "m": "EXAMPLE MAC",
+      "ss": "....",
+      "r": -42,
+      "e": 0,
+      "h": 0
+    },
+    {
+      "c": 6,
+      "m": "EXAMPLE MAC",
+      "ss": "....",
+      "r": -42,
+      "e": 0,
+      "h": 0
+    }
+  ]
+}

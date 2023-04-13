@@ -1,0 +1,26 @@
+
+{
+	"apSsid":	"ESP32_NAT_Router +",
+	"apPassword":	"temp",
+	"epUsername":	"121212",
+	"epIdentity":	"121212",
+	"ssid":	"Stass",
+	"password":	"stapass",
+	"apIP":	"192.168.4.1",
+	"staticIP":	"",
+	"subnetMask":	"",
+	"gateWay":	"",
+	"macAp":	"ca:2c:mc:cn:b2",
+	"dnsIP":	"1.0.0.1",
+	"nextDnsUrl":	"https://linkip.nextdns.com/XXXXXXXX",
+	"randMacAp":	true,
+	"CustomDns":	false,
+	"nextDns":	false,
+	"ledEnable":	true,
+	"darkMode":	true,
+	"webServer":	true,
+	"authUsername":	"admin",
+	"authPassword":	"123456789",
+	"maxLoginAttempts":	5,
+	"blockingTimeMin":	1
+}

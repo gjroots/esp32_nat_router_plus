@@ -1,0 +1,55 @@
+---
+title: info.title
+js: info
+layout: page
+---
+
+<div class="card-container">
+	<div class="settingsHeader">{% t info.card-1.header %}</div>
+	<div class="card">
+		<table>
+			<tr>
+				<td>{% t info.card-1.table.A %}</td>
+				<td><b id="version"></b></td>
+				<td id="update">
+					<input type="file" name="" id="file_select" accept=".bin" onchange="upload_file();" />
+					<button onclick="file_select.click();">{% t info.card-1.table.B %}</button>
+				</td>
+			</tr>
+			<tr class="WiFi" id="connection"></tr>
+			<tr class="WiFi" id="ipGatewayAddress"></tr>
+		</table>
+		<div class="card-action">
+			<a href="https://github.com/gjroots/esp32_nat_router_plus" target="blank_" class="button">{% t
+				info.strings.E %}</a><a href="https://github.com/gjroots/" class="button right"
+				target="blank_">{% t info.strings.F %}</a>
+		</div>
+	</div>
+</div>
+
+<div class="card-container">
+	<div class="settingsHeader">{{site.translations[site.lang].info.card-2.header | replace_first: '$$',
+		'<span id="clientsFound"></span>'}}</div>
+	<div class="card">
+		<table id="users"></table>
+	</div>
+</div>
+<div class="card-container">
+	<div class="settingsHeader">{% t info.card-3.header %}</div>
+	<div class="card">
+		<div class="card-content">
+			<a href="https://github.com/martin-ger/"><b>@martin-ger</b></a>(martin-ger)<br>
+			<a href="https://github.com/samdenty" target="_blank">@samdenty</a> (Sam Denty)<br/>
+		 	<a href="https://gitlab.com/kevinwolfe" target="_blank">@kevinwolfe</a>(Kevin Wolfe)<br />
+			<a href="https://github.com/nopnop2002" target="_blank">@nopnop2002</a><br />
+			<a href="https://github.com/dchristl" target="_blank">@dchristl</a><br />
+			
+			
+			<div class="divider"></div>
+			<!-- <div style ="word-wrap: break-word"> -->
+				<p style="word-wrap: break-word">
+			This software is based upon the work of <a href="https://github.com/martin-ger/esp32_nat_router"> martin-ger(ESP32 NAT Router).</a> UI is based on the work of <a href="https://github.com/samdenty/Wi-PWN">Sam Denty(Wi-PWN)</a>.<br>
+		<!-- </div> -->
+		</div>
+	</div>
+</div>	

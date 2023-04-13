@@ -1,0 +1,18 @@
+<nav id="nav" >
+	<div class="main-header">
+		<div id="logo-img"></div><b style="color:#fff">ESP32</b>-NAT Router +
+	</div>
+
+	<div id="links">
+		<a href="./"{% if page.url == "/" %} class="active"{% endif %}>{% t nav.scan %}</a>
+		<a href="./settings"{% if page.url == "/settings.html" %} class="active"{% endif %}>{% t nav.settings %}</a>
+		<a href="./info" class="right{% if page.url == "/info.html" %} active{% endif %}">{% t nav.info %}</a>
+	</div>
+</nav>
+
+<div id="notification"></div>
+<div id="spinner-container"></div>
+
+<script>
+{% include inline.js %}
+</script>

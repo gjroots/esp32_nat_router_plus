@@ -1,0 +1,10 @@
+---
+layout: html
+---
+{% include nav.html %}
+<div class="main-wrap">
+	{% if page.no-container == null %}<div class="container">{% endif %}
+		{{ content }}
+	{% if page.no-container == null %}</div>{% endif %}
+	{% include footer.html %}
+</div>

@@ -1,4 +1,4 @@
-# ESP32-Nat Router +
+# ESP32-NAT Router +
 
 ## OTA Handler Component
 
@@ -9,15 +9,14 @@ The OTA Handler is a firmware updater, that allows you to update  ESP32 device o
 To use the OTA Handler, you need to include the `ota_update_handler` function in your code. Here's an example of how to use it:
 
 ```c
-    #include "ota_handler.h"
-    ................
-    //send post request to this function
-   ota_update_handler(req); 
+#include "ota_handler.h"
 
+// Run initial in main() 
+ota_update_init()
 
-// run initial in main()
-
-ota_update_task(void *Param); 
+................
+//send Uploding post request to this function
+ota_update_handler(req); 
 ```
 
 In `CMakeLists.txt` update `REQUIRES ota_handler`  

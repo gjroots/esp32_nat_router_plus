@@ -39,6 +39,7 @@ OTA (Over-The-Air) update is a method of updating the firmware of a device throu
 3. Select the desired firmware for the update
 
 Once the update process begins, the device will automatically download and install the new firmware. This process may take a few minutes to complete, depending on the size of the firmware update.
+
 Please note that during an OTA update, the device may become temporarily unavailable or unresponsive. This is normal and should not be a cause for concern.
 Also, it's important to ensure that the firmware being updated is compatible with the device and that there is a stable network connection. Failure to do so can result in errors and damage to the device.
 By following these steps, you can update the firmware of your ESP32-NATS Router + remotely and keep it running smoothly with the latest features and improvements. 

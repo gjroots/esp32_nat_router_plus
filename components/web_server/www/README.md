@@ -9,6 +9,19 @@ To start using Jekyll, you need to follow these steps:
 - Install Ruby, Gem package manager & Jekyll ( check [here](https://www.ruby-lang.org/ ) )
 - Run `bundle install` in the `/html` folder to install dependencies
 
+Note :
+
+Jekyll is a static site generator that uses a specific format to separate the metadata of a web page from its content. At the top of each web file, it's important to include a specific syntax in the form of three hyphens 
+
+```
+---
+---
+```
+
+This is known as the front matter and it specifies the metadata of the web page, such as the author and the layout styles etc.
+
+It's important to include these three hyphen lines at the top of each file in order for Jekyll to properly parse the content and avoid errors while running and building the site. Therefore, always make sure to position these lines in the correct place in your web files to ensure a smooth development and build process.
+
 ## How to run a local server
 
 Once Jekyll is installed, you can start a local server by following these steps:
@@ -31,14 +44,18 @@ Once Jekyll is installed, you can start a local server by following these steps:
 ### Auto Mode (Windows only)
 
 - Make sure you have Jekyll & Gems installed (see above)
+
 - Launch `auto_generate.exe`
+
 - Wait for it to finish
+
 - That's it **¯\_(ツ)_/¯**
-
- ### How to Build auto_generate.exe
- The  `auto_generate.exe`  code is written in JavaScript and converted into an executable file using the  `pkg`  package for Node.js.
-
- To build the  `auto_generate.exe`  file, which automatically generates the website, follow these simple steps:
+  
+  ### How to Build auto_generate.exe
+  
+  The  `auto_generate.exe`  code is written in JavaScript and converted into an executable file using the  `pkg`  package for Node.js.
+  
+  To build the  `auto_generate.exe`  file, which automatically generates the website, follow these simple steps:
 1. Install [Node.js](https://nodejs.org)
 2. Open a terminal and run  `npm i -g pkg` .
 3. Extract the ZIP file provided in the **additional** folder

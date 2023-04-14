@@ -33,7 +33,7 @@ Upon the first boot of the ESP32 NAT Router, a WiFi network with an open AP and 
 
 The ESP32 NAT Router has a web interface that allows you to configure all its parameters. To access this interface, connect your PC or smartphone to the WiFi SSID "ESP32_NAT_Router+". Once you're connected, open your web browser and enter
 
-"[http://192.168.4.1](http://192.168.4.1/)''  into the address bar of your browser. Once you have entered this, you will be prompted for a username and password. The default username is "admin" and the default password is "123456789". Please note that it is recommended to change these to a more secure username and password once you have logged in:
+"[http://192.168.4.1](http://192.168.4.1/)''  into the address bar of your browser. Once you have entered this, you will be prompted for a username and password. The default `username is "admin" `and the default` password is "123456789"`. Please note that it is recommended to change these to a more secure username and password once you have logged in:
 
 <!-- ![image](docs/index.png) -->
 
@@ -117,7 +117,6 @@ Please note that the OTA method only supports updating with a single bin file, s
 As an alternative you might use [Espressif's Flash Download Tools](https://www.espressif.com/en/support/download/other-tools).
 Check the marked parameters and files like below (ckeck the COM-Port for your environment). 
 Check the addresses like below: 
-
 
 ![Single bin](docs/images/win_flash_full_bin.png)
 

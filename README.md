@@ -1,5 +1,7 @@
 # ESP32-NAT Router +
 
+This Firmware that helps you use the ESP32 as a WiFi router. You can use it to do a few things, like make your existing WiFi signal stronger, create a new WiFi network for guests or smart devices, or simplify a more complicated network. It can handle data at a speed of more than 15mbps.
+
 ## Acknowledgments
 
 This project builds upon the works of *Martin-Ger's* [ESP32 NAT Router](https://github.com/martin-ger/esp32_nat_router) and *Sam Denty's* [Wi-PWN](https://github.com/samdenty/Wi-PWN) for the UI design. However, other sources have also provided inspiration and contributed to the development of this project, including:
@@ -16,7 +18,7 @@ The features of the project, which includes:
 - Displaying connected states and quality in the UI for transparency
 - Scanning for available APs to enhance network connectivity
 - Allowing users to disable or enable the on-board indicator LED
-- Incorporating a button menu (accessible via Boot or EN button)
+- Incorporating a button menu (accessible via Boot button)
 - Custom DNS server for personalized settings
 - Incorporating a secure web interface with basic authentication method
 - Offering OTA updates for easy maintenance and functionality enhancements

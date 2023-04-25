@@ -80,6 +80,7 @@ esp_err_t authentication_handler(httpd_req_t *req, int req_id)
   if (block_request())
   {
     httpd_resp_set_status(req, HTTPD_403);
+    httpd_resp_set_hdr(req, "Connection", "close");
     httpd_resp_send(req, NULL, 0);
     return ESP_OK;
   }
@@ -95,7 +96,7 @@ esp_err_t authentication_handler(httpd_req_t *req, int req_id)
       {
         failed_attempts_count = 0;
         httpd_resp_set_status(req, HTTPD_200);
-        httpd_resp_set_hdr(req, "Connection", "keep-alive");
+        // httpd_resp_set_hdr(req, "Connection", "keep-alive");
         // Forward request to respective fields
         switch (req_id)
         {
@@ -120,7 +121,7 @@ esp_err_t authentication_handler(httpd_req_t *req, int req_id)
   }
 
   httpd_resp_set_status(req, HTTPD_401);
-  httpd_resp_set_hdr(req, "Connection", "keep-alive");
+  // httpd_resp_set_hdr(req, "Connection", "keep-alive");
   httpd_resp_set_hdr(req, "WWW-Authenticate", "Basic realm=\"Hello authenticate first\"");
   httpd_resp_send(req, NULL, 0);
 

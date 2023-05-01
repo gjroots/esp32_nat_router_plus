@@ -28,18 +28,28 @@ static const char *TAG = "wifi_event_handler";
 EventGroupHandle_t wifi_event_group;
 const int WIFI_CONNECTED_BIT = BIT0;
 
+#define WIFI_RETRY_COUNT 3
+#define WIFI_RETRY_DELAY_MAX 8000
+static int wifi_retry_count = 0;
+
 void wifi_retry_handler(void)
 {
-    ESP_LOGI(TAG, "Retrying WiFi connection");
-    // Retry the WiFi connection
-    esp_wifi_scan_stop();
-    esp_wifi_disconnect();
-    esp_wifi_connect();
-    xEventGroupClearBits(wifi_event_group, WIFI_CONNECTED_BIT);
+    if (wifi_retry_count < WIFI_RETRY_COUNT)
+    {
+        ESP_LOGI(TAG, "Retrying WiFi connection (%d/%d)", wifi_retry_count + 1, WIFI_RETRY_COUNT);
+        esp_wifi_scan_stop();
+        esp_wifi_disconnect();
+        esp_wifi_connect();
+        wifi_retry_count++;
+    }
+    else
+    {
+        vTaskDelay(WIFI_RETRY_DELAY_MAX / portTICK_PERIOD_MS);
+        ESP_LOGW(TAG, "Maximum number of WiFi connection retries reached (%d)", WIFI_RETRY_COUNT);
+        wifi_retry_count = 0;
+        wifi_retry_handler();
+    }
 }
-
-//-----------------------------------------------------------------------------
-// Disconnect handler for wifi connection
 static void wifi_disconnect_handler(const uint8_t reason)
 {
     switch (reason)

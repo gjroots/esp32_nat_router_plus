@@ -37,8 +37,13 @@ char *wifi_scan_handler(void)
         .scan_type = WIFI_SCAN_TYPE_ACTIVE,
     };
     printf("Start scanning...\n");
-    ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
-    printf(" completed!\n");
+    esp_err_t err = esp_wifi_scan_start(&scan_config, true);
+    if (err != ESP_OK)
+    {
+        return "false";
+        printf("scanning Failed!\n");
+    }
+    printf("scanning completed!\n");
     // Get the number of access points found
 
     uint16_t ap_num;

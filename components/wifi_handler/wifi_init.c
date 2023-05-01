@@ -127,10 +127,7 @@ void wifi_init()
     // Enable DNS (offer) for dhcp server
     dhcps_offer_t dhcps_dns_value = OFFER_DNS;
     dhcps_set_option_info(6, &dhcps_dns_value, sizeof(dhcps_dns_value));
-
-    xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT,
-                        pdFALSE, pdTRUE, JOIN_TIMEOUT_MS / portTICK_PERIOD_MS);
-    // vTaskDelay(2000 / portTICK_PERIOD_MS);
+    
     ESP_ERROR_CHECK(esp_wifi_start());
 
     if (strlen(ssid) > 0)
@@ -142,6 +139,8 @@ void wifi_init()
     {
         ESP_LOGI(TAG, "wifi_init_ap with default finished.");
     }
+    xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT,
+                        pdFALSE, pdFALSE, JOIN_TIMEOUT_MS / portTICK_PERIOD_MS);
 }
 
 //-----------------------------------------------------------------------------

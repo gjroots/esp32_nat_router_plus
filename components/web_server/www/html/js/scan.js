@@ -4,7 +4,6 @@ var table = document.getElementsByTagName('table')[0],
 	networkInfo = getE('networksFound'),
 	scanInfo = getE('spinner-container'),
 	apMAC = getE('apMAC'),
-	startStopScan = getE('startStopScan'),
 	selectAll = getE('selectAll'),
 	ssid = getE("ssid"),
 	password = getE("password"),
@@ -13,13 +12,16 @@ var table = document.getElementsByTagName('table')[0],
 	selectedApElement = -1,
 	previousCall = new Date().getTime(),
 	url = window.location.href,
-	wifiIndicator, securityState, res;
+	wifiIndicator, securityState,
+	scanning = false, res;
 
 function toggleScan(onoff) {
 	if (onoff) {
 		showLoading("hide");
+		scanning = false;
 	} else {
 		showLoading();
+		scanning = true;
 	}
 }
 
@@ -54,10 +56,11 @@ function getStatus(enc, hid) {
 	return buff
 }
 function scan() {
+	if (scanning) return;
 	toggleScan(false);
 	getResponse('{% if jekyll.environment == "development" %}APScanResults.json{% else %}data/APScanResults.json{% endif %}', function (responseText, status) {
-
 		try {
+			if (responseText == "false") return setTimeout(function () { scanning = false;scan(); }, 1000);
 			res = JSON.parse(responseText);
 			log("RESPONSE  ~ ", res, true)
 			notify();
@@ -66,6 +69,7 @@ function scan() {
 			log("INVALID   ~ ", responseText, false)
 			console.error(err)
 			notify('{% t scan.messages.E0 %} (E0)');
+			scanning = false;
 			return
 		}
 		res.aps = res.aps.sort(compare);
@@ -148,15 +152,15 @@ function connect() {
 		if (responseText == "true") {
 			indicate(true);
 			restart(true);
-			notify("{% t scan.messages.E2 %} (E2)",2000);
+			notify("{% t scan.messages.E2 %} (E2)", 2000);
 		} else {
 			indicate(false);
 			notify("{% t scan.messages.E3 %} (E3)");
 		}
-	},function(){
+	}, function () {
 		ndicate(false);
 		notify("{% t scan.messages.E4 %} (E4)");
-	},null,"POST");
+	}, null, "POST");
 }
 
 

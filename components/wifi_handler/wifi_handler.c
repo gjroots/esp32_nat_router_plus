@@ -19,7 +19,7 @@
 
 //-----------------------------------------------------------------------------
 // Handles wifi scan and return AP records in json string format
-char *wifi_scan_handler(void)
+char* IRAM_ATTR wifi_scan_handler(void)
 {
     // Disconnect from the current access point if not already connected
     if (!ap_connect)
@@ -84,7 +84,7 @@ char *wifi_scan_handler(void)
 
 //-----------------------------------------------------------------------------
 // Handles wifi information and return in json format
-char *wifi_info_handler(void)
+char* IRAM_ATTR wifi_info_handler(void)
 {
     wifi_ap_record_t ap_info;
     wifi_sta_list_t wifi_sta_list;

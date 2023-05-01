@@ -26,7 +26,7 @@ char *ssid, *ent_username, *ent_identity,
 char currentMAC[18];
 
 //-----------------------------------------------------------------------------
-esp_err_t parms_init()
+esp_err_t IRAM_ATTR parms_init()
 {
     int webServer = 1, ledEnable = 1, customDnsEnable = 0,
         darkModeEnable = 0, randomizeMac = 0;

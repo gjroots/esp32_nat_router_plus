@@ -34,7 +34,7 @@ bool has_static_ip = false;
 // initiating wifi setup
 void wifi_init()
 {
-
+    esp_log_level_set("wifi", ESP_LOG_NONE);
     wifi_event_group = xEventGroupCreate();
     esp_netif_init();
     ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -127,7 +127,7 @@ void wifi_init()
     // Enable DNS (offer) for dhcp server
     dhcps_offer_t dhcps_dns_value = OFFER_DNS;
     dhcps_set_option_info(6, &dhcps_dns_value, sizeof(dhcps_dns_value));
-    
+
     ESP_ERROR_CHECK(esp_wifi_start());
 
     if (strlen(ssid) > 0)

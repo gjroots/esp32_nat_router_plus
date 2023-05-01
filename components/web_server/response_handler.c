@@ -63,7 +63,7 @@ url_handler_t handlers[] = {
 
 
 //-----------------------------------------------------------------------------
-esp_err_t common_page_response_handler(httpd_req_t *req, int req_id)
+esp_err_t ICACHE_FLASH_ATTR common_page_response_handler(httpd_req_t *req, int req_id)
 {
     for (int i = 0; i < sizeof(handlers) / sizeof(handlers[0]); i++)
     {
@@ -108,7 +108,7 @@ const size_t num_js_files = sizeof(js_files) / sizeof(js_files[0]);
 
 
 //-----------------------------------------------------------------------------
-esp_err_t common_js_response(httpd_req_t *req)
+esp_err_t ICACHE_FLASH_ATTR common_js_response(httpd_req_t *req)
 {
     for (int i = 0; i < num_js_files; i++)
     {

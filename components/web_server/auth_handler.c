@@ -36,7 +36,7 @@ basic_auth_info_t auth_info = {
 };
 
 //-----------------------------------------------------------------------------
-// blok's the user for some time to avoid brute force attacks
+// block's the user for some time to avoid brute force attacks
 static bool block_request(void)
 {
   float current_time = system_uptime_s();
@@ -96,8 +96,7 @@ esp_err_t authentication_handler(httpd_req_t *req, int req_id)
       {
         failed_attempts_count = 0;
         httpd_resp_set_status(req, HTTPD_200);
-        // httpd_resp_set_hdr(req, "Connection", "keep-alive");
-        // Forward request to respective fields
+
         switch (req_id)
         {
         case POST_OTA_UPDATE_ID:
@@ -114,14 +113,12 @@ esp_err_t authentication_handler(httpd_req_t *req, int req_id)
   }
   printf("Not authenticated\n");
   failed_attempts_count++;
-  // Update block_start_time only if blocking is initiated
   if (failed_attempts_count >= max_login_attempts && block_start_time == 0)
   {
     block_start_time = system_uptime_s();
   }
 
   httpd_resp_set_status(req, HTTPD_401);
-  // httpd_resp_set_hdr(req, "Connection", "keep-alive");
   httpd_resp_set_hdr(req, "WWW-Authenticate", "Basic realm=\"Hello authenticate first\"");
   httpd_resp_send(req, NULL, 0);
 

@@ -105,9 +105,7 @@ char *html_escape(const char *src)
     }
      // Decode the input string using url_decode
     char* decoded = url_decode(src);
-     // Get the length of the decoded string
     int len = strlen(decoded);
-     // Calculate the length of the escaped string
     int esc_len = len + 1;
     for (int i = 0; i < len; i++)
     {
@@ -116,7 +114,6 @@ char *html_escape(const char *src)
             esc_len += 5;
         }
     }
-     // Allocate memory for the escaped string
     char *res = malloc(sizeof(char) * (esc_len + 1));
     if (res == NULL)
     {
@@ -139,7 +136,6 @@ char *html_escape(const char *src)
         }
     }
     res[j] = '\0';
-     // Free the memory allocated for the decoded string
     free(decoded);
      return res;
 }

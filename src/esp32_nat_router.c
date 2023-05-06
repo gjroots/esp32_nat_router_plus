@@ -45,12 +45,8 @@ void app_main(void)
 #endif
 
     ESP_ERROR_CHECK(parms_init());
-    // initializing led & Button ;
     hardware_init();
-
     get_portmap_tab();
-
-    // Setup WIFI
     wifi_init();
     ip_napt_enable(my_ap_ip, 1);
     ESP_LOGI(TAG, "NAT is enabled");

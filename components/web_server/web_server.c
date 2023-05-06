@@ -105,7 +105,6 @@ static httpd_uri_t error_404_handler = {
 //-----------------------------------------------------------------------------
 httpd_handle_t start_webserver(void)
 {
-    // httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     // config.task_priority = 6,
     // config.max_resp_headers = 1024;
@@ -139,9 +138,9 @@ httpd_handle_t start_webserver(void)
 void stop_web_server(void)
 {
     if (server != NULL)
-    { // check if server handle is valid
+    { 
         httpd_stop(server);
-        server = NULL; // reset server handle to NULL
+        server = NULL; 
         ESP_LOGI(TAG, "Http server stoped");
     }
 }
@@ -152,11 +151,11 @@ void toggle_webserver(void)
     IsWebServerEnable = !IsWebServerEnable;
     if (IsWebServerEnable)
     {
-        server = start_webserver(); // store server handle in global variable
+        server = start_webserver(); 
     }
     else
     {
-        stop_web_server(); // use global variable to stop server
+        stop_web_server(); 
     }
 }
 

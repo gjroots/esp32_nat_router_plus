@@ -30,7 +30,6 @@ char* IRAM_ATTR wifi_scan_handler(void)
         vTaskDelay(500 / portTICK_RATE_MS);
     }
 
-    // Configure the scan parameters
     wifi_scan_config_t scan_config = {
         .ssid = NULL,
         .bssid = NULL,
@@ -42,15 +41,11 @@ char* IRAM_ATTR wifi_scan_handler(void)
     if (err == ESP_OK)
     {
         printf("scanning completed!\n");
-        // Get the number of access points found
-
         uint16_t ap_num;
         ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_num));
-        // Allocate memory for the list of access points
         wifi_ap_record_t *ap_records = (wifi_ap_record_t *)malloc(sizeof(wifi_ap_record_t) * 100);
         ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&ap_num, ap_records));
         printf("Found %d access points:\n", ap_num);
-        // Create a JSON object to store the list of access points
         cJSON *root = cJSON_CreateObject();
         cJSON *aps = cJSON_CreateArray();
         cJSON_AddItemToObject(root, "aps", aps);
@@ -58,7 +53,6 @@ char* IRAM_ATTR wifi_scan_handler(void)
         for (int i = 0; i < ap_num; i++)
         {
             sprintf(bssid_str, MACSTR, MAC2STR(ap_records[i].bssid));
-            // Create a JSON object for each access point
             cJSON *ap = cJSON_CreateObject();
             cJSON_AddNumberToObject(ap, "c", ap_records[i].primary);
             cJSON_AddStringToObject(ap, "m", (const char *)bssid_str);
@@ -67,7 +61,6 @@ char* IRAM_ATTR wifi_scan_handler(void)
             cJSON_AddNumberToObject(ap, "e", ap_records[i].authmode);
             cJSON_AddItemToArray(aps, ap);
         }
-        // Convert the JSON object to a string
         char *my_json_string = cJSON_Print(root);
         cJSON_Delete(root);
         free(ap_records);
@@ -97,7 +90,6 @@ char* IRAM_ATTR wifi_info_handler(void)
     char *dns = "";
     char *ip_address = "";
     memset(&ap_info, 0, sizeof(ap_info));
-    // Get the access point info if connected
     if (ap_connect)
     {
         if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK)
@@ -115,12 +107,11 @@ char* IRAM_ATTR wifi_info_handler(void)
             ip_address = "";
         }
     }
-    // Get the list of connected clients
     memset(&wifi_sta_list, 0, sizeof(wifi_sta_list));
     memset(&adapter_sta_list, 0, sizeof(adapter_sta_list));
     ESP_ERROR_CHECK(esp_wifi_ap_get_sta_list(&wifi_sta_list));
     ESP_ERROR_CHECK(tcpip_adapter_get_sta_list(&wifi_sta_list, &adapter_sta_list));
-    // Create a JSON object to store the access point and client info
+
     cJSON *root = cJSON_CreateObject();
     cJSON_AddStringToObject(root, "ipAddress", ip_address);
     cJSON_AddStringToObject(root, "gatewayAddress", dns);
@@ -130,7 +121,6 @@ char* IRAM_ATTR wifi_info_handler(void)
     for (int i = 0; i < adapter_sta_list.num; i++)
     {
         tcpip_adapter_sta_info_t station = adapter_sta_list.sta[i];
-        // Create a JSON object for each connected client
         cJSON *client = cJSON_CreateObject();
         cJSON_AddStringToObject(client, "ipAddress", ip4addr_ntoa((ip4_addr_t *)&(station.ip)));
         char mac_address[18];
@@ -138,7 +128,6 @@ char* IRAM_ATTR wifi_info_handler(void)
         cJSON_AddStringToObject(client, "macAddress", mac_address);
         cJSON_AddItemToArray(clients, client);
     }
-    // Convert the JSON object to a string
     char *my_json_string = cJSON_Print(root);
     cJSON_Delete(root);
     return my_json_string;

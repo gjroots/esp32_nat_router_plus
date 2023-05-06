@@ -58,7 +58,6 @@ static void wifi_disconnect_handler(const uint8_t reason)
     case WIFI_REASON_HANDSHAKE_TIMEOUT:
     case WIFI_REASON_AUTH_FAIL:
     case WIFI_REASON_4WAY_HANDSHAKE_TIMEOUT:
-        // Log authentication failure
         ESP_LOGI(TAG, "Authentication failed");
         IsWifiAuthFail = true;
         wifi_retry_handler();
@@ -100,7 +99,6 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base,
     }
     else if (WIFI_EVENT == event_base && WIFI_EVENT_STA_DISCONNECTED == event_id)
     {
-        // dns_server_stop();
         wifi_event_sta_disconnected_t *disconnected = (wifi_event_sta_disconnected_t *)event_data;
         xEventGroupClearBits(wifi_event_group, WIFI_CONNECTED_BIT);
 

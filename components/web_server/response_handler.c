@@ -102,7 +102,6 @@ js_file_t js_files[] = {
     {"/js/info.js", (const uint8_t *)info_js_gz_start, (const uint8_t *)info_js_gz_end},
     {"/js/settings.js", (const uint8_t *)settings_js_gz_start, (const uint8_t *)settings_js_gz_end},
     {"/js/functions.js", (const uint8_t *)functions_js_gz_start, (const uint8_t *)functions_js_gz_end},
-    // {"/js/site.js", (const uint8_t *)site_js_gz_start, (const uint8_t *)site_js_gz_end}
 };
 const size_t num_js_files = sizeof(js_files) / sizeof(js_files[0]);
 
@@ -156,7 +155,7 @@ esp_err_t common_data_request(httpd_req_t *req)
         httpd_resp_set_type(req, "application/json");
         if (httpd_resp_send(req, "true", HTTPD_RESP_USE_STRLEN) == ESP_OK)
         {
-            vTaskDelay(pdMS_TO_TICKS(2000)); // delay for 3 seconds
+            vTaskDelay(pdMS_TO_TICKS(2000)); 
             restart();
         }
         return ESP_OK;

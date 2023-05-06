@@ -21,7 +21,7 @@ The Button Menu feature of the ESP32-NATS Router + currently provides three sett
 - Toggle web server  (which allows you to turn on or off the webserver temporarily
 
 - Erase Flash   (which will erase all data from flash memory).
-1. Hold down the boot/EN button for 3 seconds to enter the menu mode. The LED will indicate that the device has entered the menu mode.
+1. Hold down the **BOOT** button for 3 seconds to enter the menu mode. The LED will indicate that the device has entered the menu mode.
 
 2. Click the button once to cycle through the menu options. 
 

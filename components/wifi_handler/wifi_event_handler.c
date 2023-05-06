@@ -38,8 +38,8 @@ void wifi_retry_handler(void)
     {
         ESP_LOGI(TAG, "Retrying WiFi connection (%d/%d)", wifi_retry_count + 1, WIFI_RETRY_COUNT);
         esp_wifi_scan_stop();
-        esp_wifi_disconnect();
-        esp_wifi_connect();
+        if (!is_scanning_progress)
+            esp_wifi_connect();
         wifi_retry_count++;
     }
     else
@@ -126,7 +126,8 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base,
     }
     else if (WIFI_EVENT == event_base && WIFI_EVENT_AP_STADISCONNECTED == event_id)
     {
-        connect_count--;
+        if (!(connect_count <= 0))
+            connect_count--;
         ESP_LOGI(TAG, "station disconnected - %d remain", connect_count);
     }
 }

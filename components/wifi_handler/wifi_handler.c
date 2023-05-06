@@ -17,6 +17,7 @@
 #include "wifi_handler.h"
 #include "wifi_event_handler.h"
 
+bool is_scanning_progress = false;
 //-----------------------------------------------------------------------------
 // Handles wifi scan and return AP records in json string format
 char* IRAM_ATTR wifi_scan_handler(void)
@@ -24,7 +25,7 @@ char* IRAM_ATTR wifi_scan_handler(void)
     // Disconnect from the current access point if not already connected
     if (!ap_connect)
     {
-        esp_wifi_scan_stop();
+        is_scanning_progress = true;
         esp_wifi_disconnect();
         vTaskDelay(500 / portTICK_RATE_MS);
     }
@@ -38,48 +39,49 @@ char* IRAM_ATTR wifi_scan_handler(void)
     };
     printf("Start scanning...\n");
     esp_err_t err = esp_wifi_scan_start(&scan_config, true);
-    if (err != ESP_OK)
+    if (err == ESP_OK)
     {
-        return "false";
-        printf("scanning Failed!\n");
-    }
-    printf("scanning completed!\n");
-    // Get the number of access points found
+        printf("scanning completed!\n");
+        // Get the number of access points found
 
-    uint16_t ap_num;
-    ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_num));
-    // Allocate memory for the list of access points
-    wifi_ap_record_t *ap_records = (wifi_ap_record_t *)malloc(sizeof(wifi_ap_record_t) * 100);
-    ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&ap_num, ap_records));
-    printf("Found %d access points:\n", ap_num);
-    // Create a JSON object to store the list of access points
-    cJSON *root = cJSON_CreateObject();
-    cJSON *aps = cJSON_CreateArray();
-    cJSON_AddItemToObject(root, "aps", aps);
-    char bssid_str[18];
-    for (int i = 0; i < ap_num; i++)
-    {
-        sprintf(bssid_str, MACSTR, MAC2STR(ap_records[i].bssid));
-        // Create a JSON object for each access point
-        cJSON *ap = cJSON_CreateObject();
-        cJSON_AddNumberToObject(ap, "c", ap_records[i].primary);
-        cJSON_AddStringToObject(ap, "m", (const char *)bssid_str);
-        cJSON_AddStringToObject(ap, "ss", (const char *)ap_records[i].ssid);
-        cJSON_AddNumberToObject(ap, "r", ap_records[i].rssi);
-        cJSON_AddNumberToObject(ap, "e", ap_records[i].authmode);
-        cJSON_AddItemToArray(aps, ap);
+        uint16_t ap_num;
+        ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_num));
+        // Allocate memory for the list of access points
+        wifi_ap_record_t *ap_records = (wifi_ap_record_t *)malloc(sizeof(wifi_ap_record_t) * 100);
+        ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&ap_num, ap_records));
+        printf("Found %d access points:\n", ap_num);
+        // Create a JSON object to store the list of access points
+        cJSON *root = cJSON_CreateObject();
+        cJSON *aps = cJSON_CreateArray();
+        cJSON_AddItemToObject(root, "aps", aps);
+        char bssid_str[18];
+        for (int i = 0; i < ap_num; i++)
+        {
+            sprintf(bssid_str, MACSTR, MAC2STR(ap_records[i].bssid));
+            // Create a JSON object for each access point
+            cJSON *ap = cJSON_CreateObject();
+            cJSON_AddNumberToObject(ap, "c", ap_records[i].primary);
+            cJSON_AddStringToObject(ap, "m", (const char *)bssid_str);
+            cJSON_AddStringToObject(ap, "ss", (const char *)ap_records[i].ssid);
+            cJSON_AddNumberToObject(ap, "r", ap_records[i].rssi);
+            cJSON_AddNumberToObject(ap, "e", ap_records[i].authmode);
+            cJSON_AddItemToArray(aps, ap);
+        }
+        // Convert the JSON object to a string
+        char *my_json_string = cJSON_Print(root);
+        cJSON_Delete(root);
+        free(ap_records);
+        // Reconnect to the access point if not already connected
+        if (!ap_connect)
+        {
+            is_scanning_progress = false;
+            vTaskDelay(300 / portTICK_RATE_MS);
+            esp_wifi_connect();
+        }
+        return my_json_string;
     }
-    // Convert the JSON object to a string
-    char *my_json_string = cJSON_Print(root);
-    cJSON_Delete(root);
-    free(ap_records);
-    // Reconnect to the access point if not already connected
-    if (!ap_connect)
-    {
-        vTaskDelay(300 / portTICK_RATE_MS);
-        esp_wifi_connect();
-    }
-    return my_json_string;
+    printf("scanning Failed!\n");
+    return "false";
 }
 
 //-----------------------------------------------------------------------------

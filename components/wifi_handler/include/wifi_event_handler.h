@@ -21,6 +21,7 @@ extern "C"
     EventGroupHandle_t wifi_event_group;
     const int WIFI_CONNECTED_BIT;
     void wifi_events_register_init(void);
+    bool is_scanning_progress;
 
 #ifdef __cplusplus
 }

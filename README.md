@@ -33,7 +33,7 @@ Upon the first boot of the ESP32 NAT Router, a WiFi network with an open AP and 
 
 ## Web Config Interface
 
-The ESP32 NAT Router has a web interface that allows you to configure all its parameters. To access this interface, connect your PC or smartphone to the WiFi SSID "ESP32_NAT_Router+". Once you're connected, open your web browser and enter
+The ESP32 NAT Router has a web interface that allows you to configure all its parameters. To access this interface, connect your PC or smartphone to the WiFi SSID "ESP32_NAT_Router +". Once you're connected, open your web browser and enter
 
 "[http://192.168.4.1](http://192.168.4.1/)''  into the address bar of your browser. Once you have entered this, you will be prompted for a username and password. The default `username is "admin" `and the default` password is "123456789"`. Please note that it is recommended to change these to a more secure username and password once you have logged in:
 
@@ -61,8 +61,8 @@ By following these steps, you can reconfigure the ESP32 NAT Router to connect to
 ## Flashing the prebuild binaries
 
 - Download [latest release](https://github.com/gjroots/esp32_nat_router_plus/releases/latest)
-  * Download esp32nat_Router+_vX.X.X.zip for fresh install
-  * Download esp32nat_Router+_full_vX.X.X_0x0.zip for update
+  * Download esp32nat_Router+_vX.X.X.zip for fresh install (multi bin)
+  * Download esp32nat_Router+_full_vX.X.X_0x0.zip for single bin (merged, 0x0)
 - Install [esptool](https://github.com/espressif/esptool)
 
 ### First install/ Reset (Terminal/CMD)
@@ -142,7 +142,7 @@ If you are happy with the project and would like to support the creator, there a
 
 ## License
 
-The software is released under the MIT License, which can be found in the file named "[LICENSE](LICENSE)". Additionally, any third-party source files included in the software will have their own license header.
+The software is released under the **MIT License** , which can be found in the file named "[LICENSE](LICENSE)". Additionally, any third-party source files included in the software will have their own license header.
 
 ## Screenshots
 

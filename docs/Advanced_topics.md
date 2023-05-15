@@ -4,7 +4,7 @@
 
 ### Interpreting the on board LED :
 
-The on-board LED of the ESP32 NAT Router serves as an indicator of its status. If the device is connected to the upstream access point, the LED will be turned on. 
+The on-board LED of the ESP32 serves as an indicator of its status. If the device is connected to the upstream access point, the LED will be turned on. 
 
 For example, 
 
@@ -14,13 +14,14 @@ Conversely, if two devices are connected to the ESP32, but the device is not con
 
 ### Button Menu :
 
-The Button Menu feature of the ESP32-NATS Router + currently provides three settings that can be accessed by following these steps:
+The Button Menu feature of the ESP32-NAT Router + currently provides three settings that can be accessed by following these steps:
 
 - Toggle Led   (which allows you to turn the LED on or off temporarily)
 
 - Toggle web server  (which allows you to turn on or off the webserver temporarily
 
 - Erase Flash   (which will erase all data from flash memory).
+#### Usage :
 1. Hold down the **BOOT** button for 3 seconds to enter the menu mode. The LED will indicate that the device has entered the menu mode.
 
 2. Click the button once to cycle through the menu options. 
@@ -32,7 +33,7 @@ To go back to the normal mode, perform more than 3 steps. Note that if you relea
 ### OTA Update :
 
 OTA (Over-The-Air) update is a method of updating the firmware of a device through a wireless network connection. This method eliminates the need for physical access to the device and can be done remotely, making it a convenient way to update the firmware.
- To perform an OTA update on the ESP32-NATS Router +, follow these steps:
+ To perform an OTA update on the ESP32-NAT Router +, follow these steps:
 
 1. Go to the "Info" page in the web interface of the router
 2. Click on the "Update" button
@@ -42,7 +43,7 @@ Once the update process begins, the device will automatically download and insta
 
 Please note that during an OTA update, the device may become temporarily unavailable or unresponsive. This is normal and should not be a cause for concern.
 Also, it's important to ensure that the firmware being updated is compatible with the device and that there is a stable network connection. Failure to do so can result in errors and damage to the device.
-By following these steps, you can update the firmware of your ESP32-NATS Router + remotely and keep it running smoothly with the latest features and improvements. 
+By following these steps, you can update the firmware of your ESP32-NAT Router + remotely and keep it running smoothly with the latest features and improvements. 
 
 ### Settings :
 
@@ -67,6 +68,22 @@ They are several settings are provided to manage router insections :
 - Enable LED indicator: Enables or disables the onboard LED
 
 - Enable web server: Enables the web interface to access settings and other features.
+#### AP Sertings :
+The AP settings refer to the configuration of the access point.
+- SSID:
+- Password:
+
+#### STA settings :
+The STA settings refer to devices that connect to the wireless network. 
+- SSID:
+- Password
+
+#### Static IP Settings:
+Static IP Settings refer to the configuration of a fixed IP address for your device on a network. 
+- Static IP Address: (ex:192.168.1.200)
+- Net Mask : (ex: 255.255.255.0)
+- GateWay Address: (ex: 192.168.1.1)
+
 
 #### Admin Settings :
 
@@ -80,12 +97,12 @@ By configuring these settings, you can enhance the security of your ESP32 NAT Ro
 #### Advanced settings :
 
 - Ap IP:  You can customize the IP address of the access point to acces Web interface. 
-- Custom DNS: The advanced settings feature also allows you to add custom DNS servers to the configuration. By doing so, you can prioritize specific DNS servers or configure alternative DNS servers based on your needs.
-- Random MAC Address: To configure a random MAC address for the access point. This feature enhances security and privacy by preventing the access point's MAC address from being tracked or identified by unauthorized parties.
+- Custom DNS: The advanced settings feature also allows you to add custom DNS serveto the configuration. By doing so, you can prioritize specific DNS servers or configure alternative DNS servers based on your needs.
+- Random MAC Address: To configure a random MAC address for the access point. This feature enhances security and privacy by preventing the access point's MAC address from being tracked or identified by unauthorized pa
 
 ### Command Line Interface
 
-To configure the WiFi settings of the ESP32 NAT Router, you can use a serial console such as Putty or GtkTerm with a baud rate of 115200 bps. Use the "set_sta" and "set_ap" command to configure the WiFi settings. These changes are stored persistently in NVS and will be applied after the device is restarted. You can use the "show" command to view the current configuration. The NVS namespace used for the configuration parameters is "esp32_nat".
+To configure the WiFi settings of the ESP32 NAT Router +, you can use a serial console such as Putty or GtkTerm with a baud rate of 115200 bps. Use the "set_sta" and "set_ap" command to configure the WiFi settings. These changes are stored persistently in NVS and will be applied after the device is restarted. You can use the "show" command to view the current configuration. The NVS namespace used for the configuration parameters is "esp32_nat".
 
 ```
 help 

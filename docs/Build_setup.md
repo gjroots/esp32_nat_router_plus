@@ -16,7 +16,9 @@
 
 ### Prerequisites
 
-Before diving into the project, there are several prerequisites that need to be installed: 
+Before diving into the project, there are several prerequisites that need to be installed:
+
+ ***Note : Currently Supporting upto espidf 4.x.x and PltformIO : `PLATFORM: Espressif 32 (5.x.x)`***
 
 - [VisualStudio Code](https://code.visualstudio.com/)
 - [PlatformIO IDE for VSCode](https://platformio.org/install/ide?install=vscode)
@@ -96,7 +98,7 @@ Once Jekyll is installed, you can start a local server by following these steps:
 
 During the Auto Mode, the Python script monitors the `www/output/html` folder for any changes and automatically triggers the site build process and  files compress into the `www/output/gzip` folder. 
 
-Note:  This process is only triggered when changes are made through the live server, as Jekyll has two modes, namely the **development mode** and the **production mode**. After completing the development phase, the site is converted to production mode, where in the files are minified to enhance the site's loading speed.
+Note:  This process is only triggered when changes are made through the live server or run build manually, as Jekyll has two modes, namely the **development mode** and the **production mode**. After completing the development phase, the site is converted to production mode, where in the files are minified to enhance the site's loading speed.
 
 ##### Alternatively (Windows only)
 

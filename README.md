@@ -60,7 +60,7 @@ By following these steps, you can reconfigure the ESP32 NAT Router to connect to
 
 ## Flashing the prebuild binaries
 
-- Download [latest release](https://github.com/gjroots/esp32_nats_router_plus/releases/latest)
+- Download [latest release](https://github.com/gjroots/esp32_nat_router_plus/releases/latest)
   * Download esp32nat_Router+_vX.X.X.zip for fresh install
   * Download esp32nat_Router+_full_vX.X.X_0x0.zip for update
 - Install [esptool](https://github.com/espressif/esptool)

@@ -16,6 +16,7 @@ extern "C"
 #include <esp_err.h>
     esp_err_t get_portmap_tab();
     esp_err_t apply_portmap_tab();
+    esp_err_t delete_portmap_tab();
 
 #ifdef __cplusplus
 }

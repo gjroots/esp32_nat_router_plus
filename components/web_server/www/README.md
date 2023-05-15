@@ -29,7 +29,7 @@ Once Jekyll is installed, you can start a local server by following these steps:
 - Run `bundle exec jekyll serve --watch` in the `/html` folder
 - Navigate to `http://127.0.0.1:4000` to see the website
 - Changes made to files will be reflected in real-time, so you can test and make adjustments to your site's appearance and functionality. (make sure to refresh the page though)
-- Alternatively, You can run the server, navigate to the root folder of the project and use `./start_web_server.sh` for Linux terminal or `./start_web_server.bat` for Windows.
+- Alternatively, You can run the server, navigate to the root folder of the project and use `./start_web_server.sh` for Linux terminal or `start_web_server.bat` for Windows.
 
 ## How to update web-server files?
 
@@ -39,7 +39,7 @@ Once Jekyll is installed, you can start a local server by following these steps:
   
    `set JEKYLL_ENV=production bundle exec jekyll build`  for Windows CMD  in the `/html` folder to generate and return to production mode minified files.
 
-- Alternatively, navigate to the root folder of the project and use `./build_web_pages.sh` in Linux terminal or `./build_web_pages.bat` in Windows CMD.
+- Alternatively, navigate to the root folder of the project and use `./build_web_pages.sh` in Linux terminal or `build_web_pages.bat` in Windows CMD.
 
 ### Auto Mode (Windows only)
 

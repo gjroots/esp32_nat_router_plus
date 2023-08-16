@@ -3,6 +3,7 @@
 var versionCell = getE("version"),
 	ipGateway = getE("ipGatewayAddress"),
 	ipAddress,
+	ssid,
 	gateWay,
 	connection = getE("connection"),
 	connectedUserCount = getE('clientsFound'),
@@ -29,6 +30,7 @@ function getData() {
 			// console.log(res.clients.length)
 			ipAddress = res.ipAddress;
 			gateWay = res.gatewayAddress;
+			ssid = res.ssid;
 			ap_rss = res.rss;
 			wifiAuthFail = res.wifiAuthFail;
 			clients = res.clients;
@@ -130,7 +132,7 @@ function ap_connection() {
 
 	var tr = '<tr><td>Wifi status</td>';
 	tr += '<td><div>' + svgImg + '</div><div><span style="background:linear-gradient(135deg, ' + getColor(signalPercent) + ' ' + signalPercent + '%,rgba(0,0,0,0.15) ' + signalPercent + '%)"></span><span style="color:' + getColor(signalPercent, true) + '">' + signalPercent + '</span></div></td>';
-	tr += '<td class=' + (state ? "green" : "red") + '><b>' + (state ? 'Connected' : (wifiAuthFail ? "wifi Auth Fail" : 'Disconnected')) + '<b></td><tr>';
+	tr += '<td class=' + (state ? "green" : "red") + '><b>' + (state ? ssid : (wifiAuthFail ? "wifi Auth Fail" : 'Disconnected')) + '<b></td><tr>';
 	connection.innerHTML = tr;
 
 	tr = '<tr><td>{% t info.card-1.table.C %}</td><td><b>' + ipAddress + '</b></td><td>' + gateWay + '</td></tr>';

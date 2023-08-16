@@ -89,11 +89,13 @@ char* IRAM_ATTR wifi_info_handler(void)
     int8_t rssi = 0;
     char *dns = "";
     char *ip_address = "";
+    char *ssid = "";
     memset(&ap_info, 0, sizeof(ap_info));
     if (ap_connect)
     {
         if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK)
         {
+            ssid = (char *)ap_info.ssid;
             rssi = ap_info.rssi;
             tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info);
             ip_address = ip4addr_ntoa(&ip_info.ip);
@@ -102,6 +104,7 @@ char* IRAM_ATTR wifi_info_handler(void)
         }
         else
         {
+            ssid = "";
             rssi = 0;
             dns = "";
             ip_address = "";
@@ -114,6 +117,7 @@ char* IRAM_ATTR wifi_info_handler(void)
 
     cJSON *root = cJSON_CreateObject();
     cJSON_AddStringToObject(root, "ipAddress", ip_address);
+    cJSON_AddStringToObject(root, "ssid", ssid);
     cJSON_AddStringToObject(root, "gatewayAddress", dns);
     cJSON_AddNumberToObject(root, "rss", rssi);
     cJSON_AddBoolToObject(root, "wifiAuthFail", IsWifiAuthFail);

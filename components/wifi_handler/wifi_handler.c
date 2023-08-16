@@ -87,27 +87,29 @@ char* IRAM_ATTR wifi_info_handler(void)
     tcpip_adapter_ip_info_t ip_info;
     tcpip_adapter_dns_info_t dns_info;
     int8_t rssi = 0;
-    char *dns = "";
-    char *ip_address = "";
+    char dns[32];
+    char ip_address[32];
     char *ssid = "";
     memset(&ap_info, 0, sizeof(ap_info));
+    memset(&ip_info, 0, sizeof(ip_info));
     if (ap_connect)
     {
         if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK)
         {
             ssid = (char *)ap_info.ssid;
             rssi = ap_info.rssi;
-            tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info);
-            ip_address = ip4addr_ntoa(&ip_info.ip);
+            ESP_ERROR_CHECK(tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info));            
+            strlcpy(ip_address, ip4addr_ntoa(&ip_info.ip), sizeof(ip_address));
+            
             tcpip_adapter_get_dns_info(TCPIP_ADAPTER_IF_STA, ESP_NETIF_DNS_MAIN, &dns_info);
-            dns = ip4addr_ntoa((ip4_addr_t *)&dns_info.ip);
+            strlcpy(dns, ip4addr_ntoa((ip4_addr_t *)&dns_info.ip), sizeof(dns));
         }
         else
         {
             ssid = "";
             rssi = 0;
-            dns = "";
-            ip_address = "";
+            strcpy(dns, "");
+            strcpy(ip_address, "");
         }
     }
     memset(&wifi_sta_list, 0, sizeof(wifi_sta_list));

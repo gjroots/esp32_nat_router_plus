@@ -60,7 +60,7 @@ The `components/web_server/www` folder contains all the static files required 
 
 ##### In our web interface building , we primarily use two folders:
 
- `components/web_server/html` and `components/web_server/output` . Once we have completed building the site, the files will appear in the `components/web_server/output/html` folder. To optimize the memory usage and increase the speed of site loading, we have converted all of the building site files into *gzip* files in`components/web_server/output/gzip` folder. This helps to reduce the overall size of the files and ensure that the site loads quickly and efficiently. 
+ `components/web_server/www/html` and `components/web_server/www/output` . Once we have completed building the site, the files will appear in the `components/web_server/output/html` folder. To optimize the memory usage and increase the speed of site loading, we have converted all of the building site files into *gzip* files in`components/web_server/output/gzip` folder. This helps to reduce the overall size of the files and ensure that the site loads quickly and efficiently. 
 
 ### What is Jekyll?
 
@@ -70,13 +70,13 @@ To start using Jekyll, you need to follow these steps:
 
 - Install Ruby, Gem package manager & Jekyll ( check [here](https://www.ruby-lang.org/ ) )
 
-- Run `bundle install` in the `components/web_server/html` folder to install dependencies
+- Run `bundle install` in the `components/web_server/www/html` folder to install dependencies
 
 #### How to run a local server
 
 Once Jekyll is installed, you can start a local server by following these steps:
 
-- Run `bundle exec jekyll serve --watch` in the `components/web_server/html` folder
+- Run `bundle exec jekyll serve --watch` in the `components/web_server/www/html` folder
 
 - Navigate to `http://127.0.0.1:4000` to see the website
 

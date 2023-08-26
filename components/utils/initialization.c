@@ -45,7 +45,7 @@ esp_err_t IRAM_ATTR parms_init()
     get_config_param_str("ap_ip", &ap_ip);
     get_config_param_str("auth_username", &authUsername);
     // get_config_param_str("mac_ap", &macAp);
-    get_config_param_str("auth_username", &authPass);
+    get_config_param_str("auth_password", &authPass);
 
     get_config_param_int("web_server", &webServer);
     get_config_param_int("led_enable", &ledEnable);

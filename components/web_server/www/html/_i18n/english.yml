@@ -120,7 +120,7 @@ info:
         table:
             A: "version"
             B: "Update"
-            C: "IP / gateway"
+            C: "IP / DNS"
     card-2:
         header: "Connected Users ($$)"
         table:

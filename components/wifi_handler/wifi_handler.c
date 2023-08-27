@@ -87,24 +87,29 @@ char* IRAM_ATTR wifi_info_handler(void)
     tcpip_adapter_ip_info_t ip_info;
     tcpip_adapter_dns_info_t dns_info;
     int8_t rssi = 0;
-    char *dns = "";
-    char *ip_address = "";
-    memset(&ap_info, 0, sizeof(ap_info));
+    char gateway_address[32];
+    char ip_address[32];
+    char dns[32];
     if (ap_connect)
     {
+        memset(&ap_info, 0, sizeof(ap_info));
+        memset(&ip_info, 0, sizeof(ip_info));
         if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK)
         {
             rssi = ap_info.rssi;
-            tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info);
-            ip_address = ip4addr_ntoa(&ip_info.ip);
-            tcpip_adapter_get_dns_info(TCPIP_ADAPTER_IF_STA, ESP_NETIF_DNS_MAIN, &dns_info);
-            dns = ip4addr_ntoa((ip4_addr_t *)&dns_info.ip);
+            ESP_ERROR_CHECK(tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info));
+            ESP_ERROR_CHECK(tcpip_adapter_get_dns_info(TCPIP_ADAPTER_IF_STA, ESP_NETIF_DNS_MAIN, &dns_info));
+
+            strlcpy(gateway_address, ip4addr_ntoa(&ip_info.gw), sizeof(gateway_address));
+            strlcpy(ip_address, ip4addr_ntoa(&ip_info.ip), sizeof(ip_address));
+            strlcpy(dns, ip4addr_ntoa((ip4_addr_t *)&dns_info.ip), sizeof(dns));
         }
         else
         {
             rssi = 0;
-            dns = "";
-            ip_address = "";
+            strcpy(gateway_address, "");
+            strcpy(ip_address, "");
+            strcpy(dns, "");
         }
     }
     memset(&wifi_sta_list, 0, sizeof(wifi_sta_list));
@@ -113,8 +118,9 @@ char* IRAM_ATTR wifi_info_handler(void)
     ESP_ERROR_CHECK(tcpip_adapter_get_sta_list(&wifi_sta_list, &adapter_sta_list));
 
     cJSON *root = cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "gatewayAddress", gateway_address);
     cJSON_AddStringToObject(root, "ipAddress", ip_address);
-    cJSON_AddStringToObject(root, "gatewayAddress", dns);
+    cJSON_AddStringToObject(root, "dns", (has_static_ip || IsCustomDnsEnable) ? customDNSip : dns);
     cJSON_AddNumberToObject(root, "rss", rssi);
     cJSON_AddBoolToObject(root, "wifiAuthFail", IsWifiAuthFail);
     cJSON *clients = cJSON_AddArrayToObject(root, "clients");

@@ -3,7 +3,7 @@
 var versionCell = getE("version"),
 	ipGateway = getE("ipGatewayAddress"),
 	ipAddress,
-	gateWay,
+	dns,
 	connection = getE("connection"),
 	connectedUserCount = getE('clientsFound'),
 	connectedUsers = getE('users'),
@@ -28,7 +28,7 @@ function getData() {
 			}
 			// console.log(res.clients.length)
 			ipAddress = res.ipAddress;
-			gateWay = res.gatewayAddress;
+			dns = res.dns;
 			ap_rss = res.rss;
 			wifiAuthFail = res.wifiAuthFail;
 			clients = res.clients;
@@ -133,7 +133,7 @@ function ap_connection() {
 	tr += '<td class=' + (state ? "green" : "red") + '><b>' + (state ? 'Connected' : (wifiAuthFail ? "wifi Auth Fail" : 'Disconnected')) + '<b></td><tr>';
 	connection.innerHTML = tr;
 
-	tr = '<tr><td>{% t info.card-1.table.C %}</td><td><b>' + ipAddress + '</b></td><td>' + gateWay + '</td></tr>';
+	tr = '<tr><td>{% t info.card-1.table.C %}</td><td><b>' + ipAddress + '</b></td><td>' + dns + '</td></tr>';
 	ap_rss != 0 ? ipGateway.innerHTML = tr : "";
 }
 function users() {

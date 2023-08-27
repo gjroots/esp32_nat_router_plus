@@ -24,6 +24,7 @@
 #include "wifi_init.h"
 #include "wifi_event_handler.h"
 #include "router_handler.h"
+#include "wifi_handler.h"
 
 static const char *TAG = "wifi_event_handler";
 EventGroupHandle_t wifi_event_group;
@@ -77,7 +78,7 @@ void set_dns_server(esp_netif_dns_info_t dnsIP)
 {
     dhcps_offer_t opt_val = OFFER_DNS;
     esp_netif_dhcps_stop(wifiAP);
-    if (IsCustomDnsEnable)
+    if (IsCustomDnsEnable || has_static_ip)
     {
         dnsIP.ip.u_addr.ip4.addr = ipaddr_addr(customDNSip);
     }

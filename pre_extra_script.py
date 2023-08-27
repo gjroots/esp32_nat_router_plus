@@ -3,6 +3,7 @@ import json
 import os
 import gzip
 import re
+import platform
 
 print("\033[94m╔═╗┌─┐┌─┐   ╔╗╔┌─┐┌┬┐ ╦═╗┌─┐┬ ┬┌┬┐┌─┐┬─┐ _|_\n║╣ └─┐├─┘32─║║║├─┤ │  ╠╦╝│ ││ │ │ ├┤ ├┬┘  |  \n╚═╝└─┘┴     ╝╚╝┴ ┴ ┴  ╩╚═└─┘└─┘ ┴ └─┘┴└─\033[0m\n")
 
@@ -14,6 +15,7 @@ config = env.GetProjectConfig()
 version = config.get("extra_script_settings", "version")
 
 jekyll_install_status = False
+system_platform = platform.system()
 
 if os.system('jekyll -v') == 0:
     # print('Jekyll is installed on your system.')
@@ -22,14 +24,14 @@ else:
     print(
         '\033[91mJekyll is not installed on your system. Please install Jekyll.\033[0m')
 
-
-# uncomment for linux and git bash users
-# def build_site():
-#     env.Execute("build_web_pages.sh")
-
-# for windows user
-def build_site():
-    env.Execute("build_web_pages.bat")
+if system_platform =="Linux":
+    # for linux user
+    def build_site():
+        env.Execute("build_web_pages.sh")
+elif system_platform == "Windows":
+    # for windows user
+    def build_site():
+        env.Execute("build_web_pages.bat")
 
 
 base_folder_path = './components/web_server/www/'

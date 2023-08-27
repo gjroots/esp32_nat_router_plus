@@ -45,7 +45,7 @@ esp_err_t IRAM_ATTR parms_init()
     get_config_param_str("ap_ip", &ap_ip);
     get_config_param_str("auth_username", &authUsername);
     // get_config_param_str("mac_ap", &macAp);
-    get_config_param_str("auth_username", &authPass);
+    get_config_param_str("auth_password", &authPass);
 
     get_config_param_int("web_server", &webServer);
     get_config_param_int("led_enable", &ledEnable);
@@ -67,7 +67,7 @@ esp_err_t IRAM_ATTR parms_init()
     gateway_addr = (gateway_addr != NULL) ? gateway_addr : "";
 
     ap_ip = (ap_ip != NULL) ? ap_ip : DEFAULT_AP_IP;
-    customDNSip = (customDNSip != NULL) ? customDNSip : "default";
+    customDNSip = (customDNSip != NULL) ? customDNSip : DEFAULT_DNS1;
 
     authUsername = (authUsername != NULL) ? authUsername : DEFAULT_ADMIN_USERNAME;
     authPass = (authPass != NULL) ? authPass : DEFAULT_ADMIN_PASSWORD;
@@ -82,13 +82,13 @@ esp_err_t IRAM_ATTR parms_init()
     auth_info.username = authUsername;
     auth_info.password = authPass;
 
-    if (IsCustomDnsEnable)
-    {
-        if (strcmp(customDNSip, "default") == 0)
-        {
-            customDNSip = DEFAULT_DNS1;
-        }
-    }
+    // if (IsCustomDnsEnable)
+    // {
+    //     if (strcmp(customDNSip, "default") == 0)
+    //     {
+    //         customDNSip = DEFAULT_DNS1;
+    //     }
+    // }
 
     macAp = currentMAC; //(macAp != NULL) ? macAp : currentMAC;
 

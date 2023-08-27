@@ -133,15 +133,15 @@ esp_err_t save_settings_data_handler(httpd_req_t *req)
         }
     }
 
-    if (httpd_query_key_value(query_buf, "authUsername", param_buf, sizeof(param_buf)) == ESP_OK)
+    if (httpd_query_key_value(query_buf, "adminUsername", param_buf, sizeof(param_buf)) == ESP_OK)
     {
         authUsername = html_escape(strdup(param_buf));
         err = nvs_set_str(handle, "auth_username", authUsername);
     }
-    if (httpd_query_key_value(query_buf, "authPassword", param_buf, sizeof(param_buf)) == ESP_OK)
+    if (httpd_query_key_value(query_buf, "adminPassword", param_buf, sizeof(param_buf)) == ESP_OK)
     {
         authPass = html_escape(strdup(param_buf));
-        err = nvs_set_str(handle, "auth_username", authPass);
+        err = nvs_set_str(handle, "auth_password", authPass);
     }
 
     if (httpd_query_key_value(query_buf, "maxLoginAttempts", param_buf, sizeof(param_buf)) == ESP_OK)

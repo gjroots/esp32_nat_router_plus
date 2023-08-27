@@ -1,6 +1,6 @@
 ---
 ---
-var version="1.1.2",
+var version="1.1.3",
 	sL = getE('spinner-container'),
 	notification = getE("notification"),
 	themeColor = getComputedStyle(document.body),

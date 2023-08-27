@@ -86,6 +86,7 @@ char* IRAM_ATTR wifi_info_handler(void)
     tcpip_adapter_sta_list_t adapter_sta_list;
     tcpip_adapter_ip_info_t ip_info;
     tcpip_adapter_dns_info_t dns_info;
+    char * ssid = "";
     int8_t rssi = 0;
     char gateway_address[32];
     char ip_address[32];
@@ -96,6 +97,7 @@ char* IRAM_ATTR wifi_info_handler(void)
         memset(&ip_info, 0, sizeof(ip_info));
         if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK)
         {
+            ssid = (char *)ap_info.ssid;
             rssi = ap_info.rssi;
             ESP_ERROR_CHECK(tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info));
             ESP_ERROR_CHECK(tcpip_adapter_get_dns_info(TCPIP_ADAPTER_IF_STA, ESP_NETIF_DNS_MAIN, &dns_info));
@@ -106,6 +108,7 @@ char* IRAM_ATTR wifi_info_handler(void)
         }
         else
         {
+            ssid = "";
             rssi = 0;
             strcpy(gateway_address, "");
             strcpy(ip_address, "");
@@ -118,6 +121,7 @@ char* IRAM_ATTR wifi_info_handler(void)
     ESP_ERROR_CHECK(tcpip_adapter_get_sta_list(&wifi_sta_list, &adapter_sta_list));
 
     cJSON *root = cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "ssid", ssid);
     cJSON_AddStringToObject(root, "gatewayAddress", gateway_address);
     cJSON_AddStringToObject(root, "ipAddress", ip_address);
     cJSON_AddStringToObject(root, "dns", (has_static_ip || IsCustomDnsEnable) ? customDNSip : dns);

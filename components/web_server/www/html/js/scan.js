@@ -146,8 +146,8 @@ function connect() {
 	if (selectedApElement == -1) return alert("{% t scan.strings.B %}");
 	showLoading();
 	var url = '{% if jekyll.environment == "development" %}settingsSave.json{% else %}data/settingsSave.json{% endif %}';
-	url += "?ssid=" + ssid.innerText;
-	url += "&password=" + password.value;
+	url += "?ssid=" + encodeURI(ssid.innerText);
+	url += "&password=" + encodeURI(password.value);
 	getResponse(url, function (responseText) {
 		if (responseText == "true") {
 			indicate(true);

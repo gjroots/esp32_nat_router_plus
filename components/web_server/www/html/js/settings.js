@@ -86,20 +86,20 @@ function getData() {
 function saveSettings() {
 	showLoading();
 	var url = '{% if jekyll.environment == "development" %}settingsSave.json{% else %}data/settingsSave.json{% endif %}';
-	url += "?ssid=" + ssid.value;
-	url += "&password=" + password.value;
-	url += "&ent_username=" + ent_username.value;
-	url += "&ent_password=" + ent_identity.value;
-	url += "&apSsid=" + apSsid.value;
-	url += "&apPassword=" + apPassword.value;
+	url += "?ssid=" + encodeURI(ssid.value);
+	url += "&password=" + encodeURI(password.value);
+	url += "&ent_username=" + encodeURI(ent_username.value);
+	url += "&ent_password=" + encodeURI(ent_identity.value);
+	url += "&apSsid=" + encodeURI(apSsid.value);
+	url += "&apPassword=" + encodeURI(apPassword.value);
 	url += "&staticIP=" + staticIP.value;
 	url += "&subnetMask=" + subnetMask.value;
 	url += "&gateway=" + gateway.value;
 	url += "&apIP=" + apIP.value;
 	url += "&macAp=" + macAp.value;
 	url += "&dnsIP=" + dnsIp.value;
-	url += "&adminUsername=" + adminUsername.value;
-	url += "&adminPassword=" + adminPassword.value;
+	url += "&adminUsername=" + encodeURI(adminUsername.value);
+	url += "&adminPassword=" + encodeURI(adminPassword.value);
 	url += "&maxLoginAttempts=" + maxLoginAttempts.value;
 	url += "&blockingTimeMin=" + blockingTimeMin.value;
 	url += "&ledEnable=" + ledEnable.checked;

@@ -152,7 +152,7 @@ errors:
     E13: "Failed to restart Router!"
     E14: "Didn't receive a response!" 
     E15: "Reconnect and reload this page" 
-    S1: "Are you sure you want to reboot Wi-PWN?"
+    S1: "Are you sure you want to reboot?"
     S2: "Wi-Fi network Connected"
     S3: "Wi-Fi network Connected Reloading...."
   

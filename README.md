@@ -25,6 +25,7 @@ The features of the project, which includes:
 - Randomize MAC address
 - Switch Between Dark and Light mode. (through settings)
 - Auto reload pages when connected to Router
+- MAC Filter for added security
 - and many more...........
 
 ## First Boot

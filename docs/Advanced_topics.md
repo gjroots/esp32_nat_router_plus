@@ -68,6 +68,7 @@ They are several settings are provided to manage router insections :
 - Enable LED indicator: Enables or disables the onboard LED
 
 - Enable web server: Enables the web interface to access settings and other features.
+- Enable MAC filter: Enables the MAC filter features.
 #### AP Sertings :
 The AP settings refer to the configuration of the access point.
 - SSID:

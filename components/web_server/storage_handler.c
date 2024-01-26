@@ -15,6 +15,7 @@
 #include "request_handler.h"
 #include "initialization.h"
 #include "utils.h"
+#include "mac_filter.h"
 
 static const char *TAG = "url_handler/get_data_handler";
 
@@ -185,6 +186,36 @@ esp_err_t save_settings_data_handler(httpd_req_t *req)
         IsDarkModeEnable = str_to_bool(html_escape(strdup(param_buf)));
         err = nvs_set_i32(handle, "dark_mode", bool_to_int(IsDarkModeEnable));
     }
+    if (httpd_query_key_value(query_buf, "macFilterEnable", param_buf, sizeof(param_buf)) == ESP_OK)
+    {
+        IsMacFilterEnable = str_to_bool(html_escape(strdup(param_buf)));
+        err = nvs_set_i32(handle, "mac_Filter", bool_to_int(IsMacFilterEnable));
+        printf("Commit failed! (%s)\n", esp_err_to_name(err));
+
+    }
+    ///////////////////
+    if (httpd_query_key_value(query_buf, "add_mac_address", param_buf, sizeof(param_buf)) == ESP_OK)
+    {
+        store_mac_address_in_nvs(html_escape(strdup(param_buf)));
+        refresh_mac_filter();
+
+    }
+    
+    if (httpd_query_key_value(query_buf, "remove_mac_address", param_buf, sizeof(param_buf)) == ESP_OK)
+    {
+        remove_mac_address_from_nvs(html_escape(strdup(param_buf)));
+        refresh_mac_filter();
+    }
+    
+    if (httpd_query_key_value(query_buf, "filter_list_type", param_buf, sizeof(param_buf)) == ESP_OK)
+    {
+        IsAllowList = word_check(html_escape(strdup(param_buf)),"Allow");
+        err = nvs_set_i32(handle, "Is_allow_list", bool_to_int(IsAllowList));
+        refresh_mac_filter();
+    }
+
+
+/////////////////
 
     valid_query = (err == ESP_OK);
 

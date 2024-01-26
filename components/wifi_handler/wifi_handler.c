@@ -16,6 +16,7 @@
 #include "initialization.h"
 #include "wifi_handler.h"
 #include "wifi_event_handler.h"
+#include "mac_filter.h"
 
 bool is_scanning_progress = false;
 //-----------------------------------------------------------------------------
@@ -125,9 +126,12 @@ char* IRAM_ATTR wifi_info_handler(void)
     cJSON_AddStringToObject(root, "gatewayAddress", gateway_address);
     cJSON_AddStringToObject(root, "ipAddress", ip_address);
     cJSON_AddStringToObject(root, "dns", (has_static_ip || IsCustomDnsEnable) ? customDNSip : dns);
+    cJSON_AddStringToObject(root, "filterListType", (IsAllowList ? "Allow":"Deny"));
     cJSON_AddNumberToObject(root, "rss", rssi);
     cJSON_AddBoolToObject(root, "wifiAuthFail", IsWifiAuthFail);
     cJSON *clients = cJSON_AddArrayToObject(root, "clients");
+    cJSON *json = retrieve_mac_addresses_as_json();
+
     for (int i = 0; i < adapter_sta_list.num; i++)
     {
         tcpip_adapter_sta_info_t station = adapter_sta_list.sta[i];
@@ -137,6 +141,10 @@ char* IRAM_ATTR wifi_info_handler(void)
         sprintf(mac_address, MACSTR, MAC2STR(station.mac));
         cJSON_AddStringToObject(client, "macAddress", mac_address);
         cJSON_AddItemToArray(clients, client);
+        
+    }
+    if(json != NULL){
+        cJSON_AddItemToObject(root,"filterList",json);
     }
     char *my_json_string = cJSON_Print(root);
     cJSON_Delete(root);

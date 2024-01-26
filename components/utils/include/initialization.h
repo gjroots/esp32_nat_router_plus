@@ -24,7 +24,7 @@ extern "C"
 #define DEFAULT_SSID "ESP32_NAT_Router +"
 
     bool IsLedEnable, IsWebServerEnable, IsCustomDnsEnable,
-        IsRandomizeMacEnable, IsDarkModeEnable, IsWifiAuthFail;
+        IsRandomizeMacEnable, IsDarkModeEnable, IsWifiAuthFail, IsMacFilterEnable, IsAllowList;
 
     char *customDNSip, *authUsername,
         *authPass, *macAp, *dnsIP, *cache;

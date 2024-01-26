@@ -67,6 +67,7 @@ settings:
         toggle-1: "Enable dark mode"
         toggle-2: "Enable LED indicator"      
         toggle-3: "Enable Web server"
+        toggle-4: "Enable MAC filter"
     card-2:
         header: "Admin Settings"
         field-1: "Username"
@@ -113,11 +114,17 @@ info:
     card-2:
         header: "Connected Users ($$)"
         table:
-            A: "ID"
-            B: "IP Address"
-            C: "MAC Adress"
+            A: "IP Address"
+            B: "MAC Address"
+            C: "Add"
     card-3:
         header: "Acknowledgements"
+    card-4:
+        header: "MAC Filter($$)"
+        table:
+            A: "ID"
+            B: "MAC Address"
+            C: "Remove"
     strings:
         B: "OTA update"
         C: "upload"
@@ -127,8 +134,11 @@ info:
     messages: 
         message-1: "file uploading Status: $$"
         message-2: "OTA Update Success - Restarting"        
+        message-3: "Settings have been saved."        
         E0: "ERROR: Failed to load sysinfo.json"
-        E1: "ERROR: OTA update ERROR"        
+        E1: "ERROR: OTA update ERROR"   
+        E2: "Failed to save settings!"
+        E3: "ERROR: Failed to save settings!"  
     
 error:
     title: "404"

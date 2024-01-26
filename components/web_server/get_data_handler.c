@@ -50,6 +50,7 @@ esp_err_t get_settings_data_handler(httpd_req_t *req)
     cJSON_AddBoolToObject(root, "ledEnable", IsLedEnable);
     cJSON_AddBoolToObject(root, "darkMode", IsDarkModeEnable);
     cJSON_AddBoolToObject(root, "webServer", IsWebServerEnable);
+    cJSON_AddBoolToObject(root, "macFilterEnabled", IsMacFilterEnable);
     cJSON_AddStringToObject(root, "authUsername", authUsername);
     cJSON_AddStringToObject(root, "authPassword", authPass);
     cJSON_AddNumberToObject(root, "maxLoginAttempts", max_login_attempts);

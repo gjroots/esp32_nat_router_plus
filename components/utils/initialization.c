@@ -16,7 +16,8 @@ static const char *TAG = "utils/initialization";
 
 bool IsLedEnable = true, IsWebServerEnable = true,
      IsCustomDnsEnable = false, IsRandomizeMacEnable = false,
-     IsDarkModeEnable = false, IsWifiAuthFail = false;
+     IsDarkModeEnable = false, IsWifiAuthFail = false, 
+     IsMacFilterEnable = false, IsAllowList = false;
 
 char *ssid, *ent_username, *ent_identity,
     *passwd, *static_ip, *subnet_mask, *gateway_addr,
@@ -29,7 +30,7 @@ char currentMAC[18];
 esp_err_t IRAM_ATTR parms_init()
 {
     int webServer = 1, ledEnable = 1, customDnsEnable = 0,
-        darkModeEnable = 0, randomizeMac = 0;
+        darkModeEnable = 0, randomizeMac = 0, isMacFilterEnable = 0, isAllowList = 0;
 
     // ESP_LOGW(TAG, "initialization Started");
     get_config_param_str("ssid", &ssid);
@@ -54,6 +55,8 @@ esp_err_t IRAM_ATTR parms_init()
     get_config_param_int("randomize_mac", &randomizeMac);
     get_config_param_int("max_login_attempts", &max_login_attempts);
     get_config_param_int("lock_out_time_minutes", &lock_out_time_minutes);
+    get_config_param_int("mac_Filter", &isMacFilterEnable);
+    get_config_param_int("Is_allow_list", &isAllowList);
 
     ap_ssid = (ap_ssid != NULL) ? ap_ssid : DEFAULT_SSID;
     ap_passwd = (ap_passwd != NULL) ? ap_passwd : "";
@@ -79,6 +82,8 @@ esp_err_t IRAM_ATTR parms_init()
     IsCustomDnsEnable = (customDnsEnable != 0);
     IsDarkModeEnable = (darkModeEnable != 0);
     IsRandomizeMacEnable = (randomizeMac != 0);
+    IsMacFilterEnable = (isMacFilterEnable != 0);
+    IsAllowList = (isAllowList != 0);
     auth_info.username = authUsername;
     auth_info.password = authPass;
 

@@ -22,6 +22,7 @@ sass:
 
 
 jekyll-minifier:
+    compress_javascript: false
     exclude: "*.json"
     uglifier_args:
         harmony: true

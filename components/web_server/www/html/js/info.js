@@ -8,11 +8,15 @@ var versionCell = getE("version"),
 	connection = getE("connection"),
 	connectedUserCount = getE('clientsFound'),
 	connectedUsers = getE('users'),
+	filterList = getE("filterList"),
+	filterListCount = getE("filterListCount"),
 	ap_rss = 0,
 	wifiAuthFail,
 	tableHeaderHTML,
 	otaProgress = false,
-	clients = [];
+	filterListType,
+	clients = [],
+	filterListData = [];
 
 function getData() {
 	if (otaProgress) return;
@@ -35,9 +39,12 @@ function getData() {
 			wifiAuthFail = res.wifiAuthFail;
 			clients = res.clients;
 			versionCell.innerHTML = version;
+			filterListData = res.filterList;
+			filterListType = res.filterListType;
 			fadeIn();
 			users();
 			ap_connection();
+			filter_list(); 
 
 		}, function () {
 			notify('{% t info.messages.E0 %} (E0)');
@@ -148,8 +155,67 @@ function users() {
 
 		for (var i = 0; i < clients.length; i++) {
 			var id = i + 1;
-			tr += '<tr><td>' + id + '</td><td>' + clients[i].ipAddress + ' </td><td>' + clients[i].macAddress + '</td></tr>';
+			tr += '<tr><td>' + clients[i].ipAddress + ' </td><td>' + clients[i].macAddress + '</td><td><button onclick="add_mac_to_filter_list('+i+');">{% t info.card-2.table.C %}</button></td></tr>';
 			connectedUsers.innerHTML = tr;
 		}
 	}
+}
+
+
+function filter_list() {
+	console.log("clients: ", filterListData.length)
+	filterListCount.innerHTML =  filterListData.length;
+	var tr = '';
+	tableHeaderHTML = '<tr><th>{% t info.card-4.table.A %}</th><th>{% t info.card-4.table.B %}</th><th>{% t info.card-4.table.C %}</th></tr>';
+		tr += tableHeaderHTML;
+		filterList.innerHTML = tr;
+	if (filterListData.length > 0) {
+
+		for (var i = 0; i < filterListData.length; i++) {
+			var id = i + 1;
+			tr += '<tr><td>' + id + '</td><td>' + filterListData[i] + ' </td><td><button onclick="remove_mac_to_filter_list('+i+');">{% t info.card-4.table.C %}</button></td></tr>';
+			filterList.innerHTML = tr;
+		}
+	}
+	var IsAllowList = (filterListType === "Allow");
+	tr += '<tr><td></td>'
+	tr += '<td><label for="Allow" class="radioContainer">Alow&nbsp <input type="radio" name="filter_type" onchange="filter_list_type()" id="Allow"'+ (IsAllowList? "checked":"") + '><label class="radio" for="Allow"></label></label></td>';
+	tr += '<td><label for="Deny" class="radioContainer">Deny&nbsp <input type="radio" name="filter_type" onchange="filter_list_type()"  id="Deny"'+ (IsAllowList? "":"checked") +'><label class="radio" for="Deny"></label></label></td>';
+	tr += '</tr>'
+	filterList.innerHTML = tr;
+}
+
+
+function saveSettings(data) {
+	var url = '{% if jekyll.environment == "development" %}settingsSave.json{% else %}data/settingsSave.json{% endif %}';
+	url += data;	
+	showLoading();
+		getResponse(url, function (responseText) {
+			if (responseText == "true") {
+				indicate(true);
+				notify("{% t info.messages.message-3 %} (M3)", 2000);
+			} else {
+				indicate(false);
+				notify("{% t info.messages.E2 %} (E2)");
+			}
+		}, function () {
+			indicate(false);
+			notify("{% t info.messages.E3 %} (E3)");
+		}, null, "POST");
+	}
+	
+
+function add_mac_to_filter_list(num){
+	var data = "?add_mac_address=" + encodeURI(clients[num].macAddress);
+	saveSettings(data); 
+}
+
+function remove_mac_to_filter_list(num){
+	var data = "?remove_mac_address=" + encodeURI(filterListData[num]);
+	saveSettings(data); 
+}
+
+function filter_list_type(){
+	var data = "?filter_list_type="+ encodeURI(getE("Allow").checked ? "Allow":"Deny")
+	saveSettings(data);
 }

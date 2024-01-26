@@ -25,6 +25,7 @@
 #include "wifi_event_handler.h"
 #include "router_handler.h"
 #include "wifi_handler.h"
+#include "mac_filter.h"
 
 static const char *TAG = "wifi_event_handler";
 EventGroupHandle_t wifi_event_group;
@@ -124,6 +125,9 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base,
     }
     else if (WIFI_EVENT == event_base && WIFI_EVENT_AP_STACONNECTED == event_id)
     {
+
+        wifi_event_ap_staconnected_t *event = (wifi_event_ap_staconnected_t *)event_data;
+        mac_filter(event->mac, event->aid);
         connect_count++;
         ESP_LOGI(TAG, "%d. station connected", connect_count);
     }

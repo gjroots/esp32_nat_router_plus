@@ -16,6 +16,7 @@ var ssid = getE('ssid'),
 	darkMode = getE('darkMode'),
 	ledEnable = getE('useLed'),
 	webServer = getE('webServer'),
+	macFilter = getE('macFilter'),
 	apIP = getE('apIP'),
 	macContainer = getE('macContainer'),
 	dnsIpContainer = getE('dnsIpContainer'),
@@ -69,6 +70,7 @@ function getData() {
 		ledEnable.checked = res.ledEnable;
 		darkMode.checked = res.darkMode;
 		webServer.checked = res.webServer;
+		macFilter.checked = res.macFilterEnabled;
 		adminUsername.value = res.authUsername;
 		adminPassword.value = res.authPassword
 		maxLoginAttempts.value = res.maxLoginAttempts
@@ -107,6 +109,7 @@ function saveSettings() {
 	url += "&CustomDns=" + CustomDns.checked;
 	url += "&darkMode=" + darkMode.checked;
 	url += "&webServer=" + webServer.checked;
+	url += "&macFilterEnable=" + macFilter.checked;
 
 
 	getResponse(url, function (responseText) {

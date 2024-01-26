@@ -739,7 +739,7 @@ hr.small {
 
 }
 
-/**************************** Buttons & checkboxes ****************************/
+/**************************** Buttons, checkboxes & radio button ****************************/
 .button, button, input[type='submit'] {
 	font-size: 14px;
 	font-weight: 500;
@@ -984,6 +984,97 @@ label.checkbox:active:before, .checkboxContainer:active label.checkbox:before {
 .row.inputCheckbox label:not(.checkbox), #settings label:not(.checkbox), #card-wrapper label:not(.checkbox) {
 	line-height: 18px;
 }
+
+
+
+.radioContainer {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+input[type='radio'] {
+    display: none;
+}
+
+input[type='radio']:checked + label {
+    border-color: #6d6d6d;
+    background: #6d6d6d;
+}
+
+input[type='radio']:checked + label:after {
+    transform: scale(1.3);
+}
+
+label.radio {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid #6d6d6d;
+    border-radius: 10%;
+    background: none;
+}
+
+label.radio:before {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 200%;
+    height: 200%;
+    content: '';
+    transition: 0.3s ease;
+    transform: translate(-27%, -27%);
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+label.radio:after {
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    transition: 0.1s ease;
+    transform: scale(0);
+    background: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRkZGRkZGIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik05IDE2LjE3TDQuODMgMTJsLTEuNDIgMS40MUw5IDE5IDIxIDdsLTEuNDEtMS40MXoiLz4KPC9zdmc+) center center no-repeat;
+    background-size: contain;
+}
+
+label.radio:active:before,
+.radioContainer:active label.radio:before {
+    width: 300%;
+    height: 300%;
+    transform: translate(-34%, -34%);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* Additional styles for labels associated with radio buttons */
+.row.inputRadio .radio {
+    float: left;
+    margin-right: 10px;
+}
+
+.row.inputRadio label:not(.radio) {
+    line-height: 18px;
+}
+
+/* Adjustments specific to your layout */
+.row.inputRadio .col-6:nth-child(2) {
+    margin-top: 26px;
+}
+
+.row.inputRadio .col-6:nth-child(2) {
+    margin-bottom: 20px;
+}
+
+
+
 
 /*********************************** Footer ***********************************/
 footer {

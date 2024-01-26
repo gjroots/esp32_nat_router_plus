@@ -35,21 +35,28 @@ layout: page
 	</div>
 </div>
 <div class="card-container">
+	<div class="settingsHeader">{{site.translations[site.lang].info.card-4.header | replace_first: '$$',
+		'<span id="filterListCount"></span>'}}</div>
+	<div class="card">
+		<table id="filterList"></table>
+	</div>
+</div>
+<div class="card-container">
 	<div class="settingsHeader">{% t info.card-3.header %}</div>
 	<div class="card">
 		<div class="card-content">
 			<a href="https://github.com/martin-ger/"><b>@martin-ger</b></a>(martin-ger)<br>
 			<a href="https://github.com/samdenty" target="_blank">@samdenty</a> (Sam Denty)<br/>
-		 	<a href="https://gitlab.com/kevinwolfe" target="_blank">@kevinwolfe</a>(Kevin Wolfe)<br />
+			<a href="https://gitlab.com/kevinwolfe" target="_blank">@kevinwolfe</a>(Kevin Wolfe)<br />
 			<a href="https://github.com/nopnop2002" target="_blank">@nopnop2002</a><br />
 			<a href="https://github.com/dchristl" target="_blank">@dchristl</a><br />
-			
-			
+
+
 			<div class="divider"></div>
 			<!-- <div style ="word-wrap: break-word"> -->
-				<p style="word-wrap: break-word">
-			This software is based upon the work of <a href="https://github.com/martin-ger/esp32_nat_router"> martin-ger(ESP32 NAT Router).</a> UI is based on the work of <a href="https://github.com/samdenty/Wi-PWN">Sam Denty(Wi-PWN)</a>.<br>
-		<!-- </div> -->
+			<p style="word-wrap: break-word">
+				This software is based upon the work of <a href="https://github.com/martin-ger/esp32_nat_router"> martin-ger(ESP32 NAT Router).</a> UI is based on the work of <a href="https://github.com/samdenty/Wi-PWN">Sam Denty(Wi-PWN)</a>.<br>
+				<!-- </div> -->
 		</div>
 	</div>
-</div>	
+</div>

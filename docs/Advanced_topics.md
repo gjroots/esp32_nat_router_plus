@@ -45,6 +45,24 @@ Please note that during an OTA update, the device may become temporarily unavail
 Also, it's important to ensure that the firmware being updated is compatible with the device and that there is a stable network connection. Failure to do so can result in errors and damage to the device.
 By following these steps, you can update the firmware of your ESP32-NAT Router + remotely and keep it running smoothly with the latest features and improvements. 
 
+### MAC Filter :
+
+The MAC Filter feature provides a way to control device access to your network by filtering devices based on their MAC addresses. This documentation will guide you through enabling the MAC filter, managing the MAC filter list, and configuring actions for allowed and denied devices.
+
+#### Managing MAC Filter List
+List will be found in **Info** page
+1. To add a device, click the ADD button when the device is connected.
+2. In the list, configure actions using the ALLOW and DENY options.
+3. Use the REMOVE button in the list to remove a device.
+
+#### Example Workflow
+
+1. **Enable MAC Filter:** Navigate to settings and enable MAC Filter.
+2. **Add Device:** When a new device connects, click ADD in the MAC filter list.
+3. **Configure Action:** Choose ALLOW or DENY the list type.
+4. **Remove Device**
+   
+
 ### Settings :
 
 They are several settings are provided to manage router insections :
@@ -99,7 +117,7 @@ By configuring these settings, you can enhance the security of your ESP32 NAT Ro
 
 - Ap IP:  You can customize the IP address of the access point to acces Web interface. 
 - Custom DNS: The advanced settings feature also allows you to add custom DNS serveto the configuration. By doing so, you can prioritize specific DNS servers or configure alternative DNS servers based on your needs.
-- Random MAC Address: To configure a random MAC address for the access point. This feature enhances security and privacy by preventing the access point's MAC address from being tracked or identified by unauthorized pa
+- Random MAC Address: To configure a random MAC address for the access point. This feature enhances security and privacy by preventing the access point's MAC address from being tracked or identified by unauthorized parties. 
 
 ### Command Line Interface
 

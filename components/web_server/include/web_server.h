@@ -16,7 +16,7 @@ extern "C"
 
     void stop_web_server(void);
     void toggle_webserver(void);
-    httpd_handle_t server;
+    extern httpd_handle_t server;
     httpd_handle_t start_webserver(void);
 
 #ifdef __cplusplus

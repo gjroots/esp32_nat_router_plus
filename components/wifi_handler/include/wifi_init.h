@@ -15,8 +15,8 @@ extern "C"
 
 #include <esp_netif.h>
 
-    esp_netif_t *wifiAP;
-    esp_netif_t *wifiSTA;
+    extern esp_netif_t *wifiAP;
+    extern esp_netif_t *wifiSTA;
     void wifi_init();
 
 #ifdef __cplusplus

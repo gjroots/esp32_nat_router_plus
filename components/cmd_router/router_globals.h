@@ -27,7 +27,7 @@ extern "C"
    extern char *ap_passwd;
    extern char *ap_ip;
 
-   bool scanning_started;
+   extern bool scanning_started;
 
    extern uint16_t connect_count;
    extern bool ap_connect;

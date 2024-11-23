@@ -12,9 +12,11 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/event_groups.h>
 #include <esp_wifi.h>
-#include <esp_wpa2.h>
+#include <esp_eap_client.h>
 #include <esp_netif.h>
 #include <esp_err.h>
+#include "lwip/ip4_addr.h"
+#include "dhcpserver/dhcpserver.h"
 
 #include "router_globals.h"
 #include "initialization.h"
@@ -41,15 +43,14 @@ void wifi_init()
     wifiAP = esp_netif_create_default_wifi_ap();
     wifiSTA = esp_netif_create_default_wifi_sta();
 
-    tcpip_adapter_ip_info_t ipInfo_sta;
-    if ((strlen(ssid) > 0) && (strlen(static_ip) > 0) && (strlen(subnet_mask) > 0) && (strlen(gateway_addr) > 0))
-    {
+    esp_netif_ip_info_t ipInfo_sta;
+    if ((strlen(ssid) > 0) && (strlen(static_ip) > 0) && (strlen(subnet_mask) > 0) && (strlen(gateway_addr) > 0)) {
         has_static_ip = true;
         my_ip = ipInfo_sta.ip.addr = ipaddr_addr(static_ip);
         ipInfo_sta.gw.addr = ipaddr_addr(gateway_addr);
         ipInfo_sta.netmask.addr = ipaddr_addr(subnet_mask);
-        tcpip_adapter_dhcpc_stop(TCPIP_ADAPTER_IF_STA); // Don't run a DHCP client
-        tcpip_adapter_set_ip_info(TCPIP_ADAPTER_IF_STA, &ipInfo_sta);
+        esp_netif_dhcpc_stop(wifiSTA); // Don't run a DHCP client
+        esp_netif_set_ip_info(wifiSTA, &ipInfo_sta);
         apply_portmap_tab();
     }
 
@@ -58,9 +59,10 @@ void wifi_init()
     ipInfo_ap.ip.addr = my_ap_ip;
     ipInfo_ap.gw.addr = my_ap_ip;
     IP4_ADDR(&ipInfo_ap.netmask, 255, 255, 255, 0);
-    esp_netif_dhcps_stop(wifiAP); // stop before setting ip WifiAP
+    esp_netif_dhcps_stop(wifiAP); // Stop before setting IP WifiAP
     esp_netif_set_ip_info(wifiAP, &ipInfo_ap);
     esp_netif_dhcps_start(wifiAP);
+
     wifi_events_register_init();
     custom_mac_generator();
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
@@ -76,71 +78,59 @@ void wifi_init()
             .ssid_hidden = 0,
             .max_connection = 10,
             .beacon_interval = 100,
-            .pairwise_cipher = WIFI_CIPHER_TYPE_CCMP}};
+            .pairwise_cipher = WIFI_CIPHER_TYPE_CCMP
+        }
+    };
 
-    strlcpy((char *)ap_config.sta.ssid, ap_ssid, sizeof(ap_config.sta.ssid));
-    if (strlen(ap_passwd) < 8)
-    {
+    strlcpy((char *)ap_config.ap.ssid, ap_ssid, sizeof(ap_config.ap.ssid));
+    if (strlen(ap_passwd) < 8) {
         ap_config.ap.authmode = WIFI_AUTH_OPEN;
-    }
-    else
-    {
-        strlcpy((char *)ap_config.sta.password, ap_passwd, sizeof(ap_config.sta.password));
+    } else {
+        strlcpy((char *)ap_config.ap.password, ap_passwd, sizeof(ap_config.ap.password));
     }
 
-    if (strlen(ssid) > 0)
-    {
+    if (strlen(ssid) > 0) {
         ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
 
         // Set SSID
         strlcpy((char *)wifi_config.sta.ssid, ssid, sizeof(wifi_config.sta.ssid));
-        // Set passwprd
-        if (strlen(ent_username) == 0)
-        {
+        // Set password
+        if (strlen(ent_username) == 0) {
             ESP_LOGI(TAG, "STA regular connection");
             strlcpy((char *)wifi_config.sta.password, passwd, sizeof(wifi_config.sta.password));
         }
         ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
-        if (strlen(ent_username) != 0 && strlen(ent_identity) != 0)
-        {
+        if (strlen(ent_username) != 0 && strlen(ent_identity) != 0) {
             ESP_LOGI(TAG, "STA enterprise connection");
-            if (strlen(ent_username) != 0 && strlen(ent_identity) != 0)
-            {
-                esp_wifi_sta_wpa2_ent_set_identity((uint8_t *)ent_identity, strlen(ent_identity)); // provide identity
+            if (strlen(ent_identity) != 0) {
+                esp_eap_client_set_identity((uint8_t *)ent_identity, strlen(ent_identity)); // Provide identity
+            } else {
+                esp_eap_client_set_identity((uint8_t *)ent_username, strlen(ent_username)); // Fallback to username
             }
-            else
-            {
-                esp_wifi_sta_wpa2_ent_set_identity((uint8_t *)ent_username, strlen(ent_username));
-            }
-            esp_wifi_sta_wpa2_ent_set_username((uint8_t *)ent_username, strlen(ent_username)); // provide username
-            esp_wifi_sta_wpa2_ent_set_password((uint8_t *)passwd, strlen(passwd));             // provide password
-            esp_wifi_sta_wpa2_ent_enable();
+            esp_eap_client_set_username((uint8_t *)ent_username, strlen(ent_username)); // Provide username
+            esp_eap_client_set_password((uint8_t *)passwd, strlen(passwd)); // Provide password
+            ESP_ERROR_CHECK(esp_wifi_sta_enterprise_enable());
         }
 
         ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &ap_config));
-    }
-    else
-    {
+    } else {
         ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
         ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &ap_config));
     }
-    // Enable DNS (offer) for dhcp server
-    dhcps_offer_t dhcps_dns_value = OFFER_DNS;
-    dhcps_set_option_info(6, &dhcps_dns_value, sizeof(dhcps_dns_value));
+
+    // Enable DNS (offer) for DHCP server
+    uint8_t dhcps_dns_value = 1; // OFFER DNS option
+    ESP_ERROR_CHECK(esp_netif_dhcps_option(wifiAP, ESP_NETIF_OP_SET, ESP_NETIF_DOMAIN_NAME_SERVER, &dhcps_dns_value, sizeof(dhcps_dns_value)));
 
     ESP_ERROR_CHECK(esp_wifi_start());
 
-    if (strlen(ssid) > 0)
-    {
+    if (strlen(ssid) > 0) {
         ESP_LOGI(TAG, "wifi_init_apsta finished.");
         ESP_LOGI(TAG, "connect to ap SSID: %s ", ssid);
-    }
-    else
-    {
+    } else {
         ESP_LOGI(TAG, "wifi_init_ap with default finished.");
     }
-    xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT,
-                        pdFALSE, pdFALSE, JOIN_TIMEOUT_MS / portTICK_PERIOD_MS);
+    xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT, pdFALSE, pdFALSE, JOIN_TIMEOUT_MS / portTICK_PERIOD_MS);
 }
 
 //-----------------------------------------------------------------------------

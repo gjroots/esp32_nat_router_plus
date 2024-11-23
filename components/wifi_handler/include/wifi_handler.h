@@ -15,7 +15,7 @@ extern "C"
 
     char *wifi_scan_handler(void);
     char *wifi_info_handler(void);
-    bool has_static_ip;
+    extern bool has_static_ip;
 
 #ifdef __cplusplus
 }

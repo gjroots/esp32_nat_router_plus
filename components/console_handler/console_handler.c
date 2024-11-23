@@ -13,10 +13,15 @@
 #include <esp_console.h>
 #include <esp_vfs_dev.h>
 #include <driver/uart.h>
+#include "driver/uart_vfs.h"
+#include "driver/usb_serial_jtag_vfs.h"
 #include <linenoise/linenoise.h>
 #include <argtable3/argtable3.h>
 #include <esp_vfs_fat.h>
-
+#include <esp_task_wdt.h>
+#include "esp_sleep.h"
+#include "esp_vfs_dev.h"
+#include "driver/usb_serial_jtag.h"
 #include "router_globals.h"
 #include "console_handler.h"
 
@@ -30,9 +35,9 @@ void initialize_console(void)
     setvbuf(stdin, NULL, _IONBF, 0);
 
     /* Minicom, screen, idf_monitor send CR when ENTER key is pressed */
-    esp_vfs_dev_uart_port_set_rx_line_endings(0, ESP_LINE_ENDINGS_CR);
+    uart_vfs_dev_port_set_rx_line_endings(CONFIG_ESP_CONSOLE_UART_NUM, ESP_LINE_ENDINGS_CR);
     /* Move the caret to the beginning of the next line on '\n' */
-    esp_vfs_dev_uart_port_set_tx_line_endings(0, ESP_LINE_ENDINGS_CRLF);
+    uart_vfs_dev_port_set_tx_line_endings(CONFIG_ESP_CONSOLE_UART_NUM, ESP_LINE_ENDINGS_CRLF);
 
     /* Configure UART. Note that REF_TICK is used so that the baud rate remains
      * correct while APB frequency is changing in light sleep mode.
@@ -54,7 +59,7 @@ void initialize_console(void)
     ESP_ERROR_CHECK(uart_param_config(CONFIG_ESP_CONSOLE_UART_NUM, &uart_config));
 
     /* Tell VFS to use UART driver */
-    esp_vfs_dev_uart_use_driver(CONFIG_ESP_CONSOLE_UART_NUM);
+    uart_vfs_dev_use_driver(CONFIG_ESP_CONSOLE_UART_NUM);
 
     /* Initialize the console */
     esp_console_config_t console_config = {

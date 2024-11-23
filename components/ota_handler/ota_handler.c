@@ -39,9 +39,9 @@ esp_err_t ota_update_handler(httpd_req_t *req)
     return ESP_FAIL;
   }
 
-  ESP_LOGI(TAG, "Writing partition: type %d, subtype %d, offset 0x%08x\n",
+  ESP_LOGI(TAG, "Writing partition: type %d, subtype %d, offset 0x%08lx\n",
            update_partition->type, update_partition->subtype, update_partition->address);
-  ESP_LOGI(TAG, "Running partition: type %d, subtype %d, offset 0x%08x\n",
+  ESP_LOGI(TAG, "Running partition: type %d, subtype %d, offset 0x%08lx\n",
            running_partition->type, running_partition->subtype, running_partition->address);
 
   err = esp_ota_begin(update_partition, OTA_WITH_SEQUENTIAL_WRITES, &update_handle);
@@ -95,7 +95,7 @@ esp_err_t ota_update_handler(httpd_req_t *req)
   httpd_resp_set_status(req, HTTPD_200);
   httpd_resp_send(req, NULL, 0);
 
-  vTaskDelay(2000 / portTICK_RATE_MS);
+  vTaskDelay(2000 / portTICK_PERIOD_MS);
   esp_restart();
 
   return ESP_OK;
@@ -120,7 +120,7 @@ void ota_update_task(void *Param)
   const uint32_t task_delay_ms = 10;
   while (1)
   {
-    vTaskDelay(task_delay_ms / portTICK_RATE_MS);
+    vTaskDelay(task_delay_ms / portTICK_PERIOD_MS);
   }
 }
 

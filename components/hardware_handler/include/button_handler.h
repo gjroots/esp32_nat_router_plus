@@ -15,8 +15,8 @@ extern "C"
 
 #include <stdbool.h>
     void start_button_task(void);
-    int menu_count;
-    bool IsMenuEnable;
+    extern int menu_count;
+    extern bool IsMenuEnable;
 
 #ifdef __cplusplus
 }

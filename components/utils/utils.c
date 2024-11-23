@@ -9,11 +9,17 @@
 #include <string.h>
 #include <time.h>
 #include <esp_log.h>
+#include "esp_timer.h"
 #include <lwip/inet.h>
 #include <lwip/sockets.h>
 #include "initialization.h"
 #include "router_globals.h"
 #include "utils.h"
+#include "esp_efuse.h" 
+#include "esp_system.h"
+#include "esp_mac.h"
+#include "esp_netif.h" 
+#include "esp_wifi.h"
 
 // static const char *TAG = "components/utils";
 

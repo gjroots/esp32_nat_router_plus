@@ -17,6 +17,8 @@
 #include "wifi_handler.h"
 #include "wifi_event_handler.h"
 #include "mac_filter.h"
+#include "esp_mac.h"
+#include "esp_wifi_ap_get_sta_list.h"
 
 bool is_scanning_progress = false;
 //-----------------------------------------------------------------------------
@@ -28,7 +30,7 @@ char* IRAM_ATTR wifi_scan_handler(void)
     {
         is_scanning_progress = true;
         esp_wifi_disconnect();
-        vTaskDelay(500 / portTICK_RATE_MS);
+        vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 
     wifi_scan_config_t scan_config = {
@@ -69,7 +71,7 @@ char* IRAM_ATTR wifi_scan_handler(void)
         if (!ap_connect)
         {
             is_scanning_progress = false;
-            vTaskDelay(300 / portTICK_RATE_MS);
+            vTaskDelay(300 / portTICK_PERIOD_MS);
             esp_wifi_connect();
         }
         return my_json_string;
@@ -84,31 +86,28 @@ char* IRAM_ATTR wifi_info_handler(void)
 {
     wifi_ap_record_t ap_info;
     wifi_sta_list_t wifi_sta_list;
-    tcpip_adapter_sta_list_t adapter_sta_list;
-    tcpip_adapter_ip_info_t ip_info;
-    tcpip_adapter_dns_info_t dns_info;
-    char * ssid = "";
+    wifi_sta_mac_ip_list_t adapter_sta_list;
+    esp_netif_ip_info_t ip_info;
+    esp_netif_dns_info_t dns_info;
+    char *ssid = "";
     int8_t rssi = 0;
     char gateway_address[32];
     char ip_address[32];
     char dns[32];
-    if (ap_connect)
-    {
+
+    if (ap_connect) {
         memset(&ap_info, 0, sizeof(ap_info));
         memset(&ip_info, 0, sizeof(ip_info));
-        if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK)
-        {
+        if (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK) {
             ssid = (char *)ap_info.ssid;
             rssi = ap_info.rssi;
-            ESP_ERROR_CHECK(tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &ip_info));
-            ESP_ERROR_CHECK(tcpip_adapter_get_dns_info(TCPIP_ADAPTER_IF_STA, ESP_NETIF_DNS_MAIN, &dns_info));
+            ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info));
+            ESP_ERROR_CHECK(esp_netif_get_dns_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), ESP_NETIF_DNS_MAIN, &dns_info));
 
-            strlcpy(gateway_address, ip4addr_ntoa(&ip_info.gw), sizeof(gateway_address));
-            strlcpy(ip_address, ip4addr_ntoa(&ip_info.ip), sizeof(ip_address));
-            strlcpy(dns, ip4addr_ntoa((ip4_addr_t *)&dns_info.ip), sizeof(dns));
-        }
-        else
-        {
+            strlcpy(gateway_address, ip4addr_ntoa((const ip4_addr_t *)&ip_info.gw), sizeof(gateway_address));
+            strlcpy(ip_address, ip4addr_ntoa((const ip4_addr_t *)&ip_info.ip), sizeof(ip_address));
+            strlcpy(dns, ip4addr_ntoa((const ip4_addr_t *)&dns_info.ip), sizeof(dns));
+        } else {
             ssid = "";
             rssi = 0;
             strcpy(gateway_address, "");
@@ -119,32 +118,33 @@ char* IRAM_ATTR wifi_info_handler(void)
     memset(&wifi_sta_list, 0, sizeof(wifi_sta_list));
     memset(&adapter_sta_list, 0, sizeof(adapter_sta_list));
     ESP_ERROR_CHECK(esp_wifi_ap_get_sta_list(&wifi_sta_list));
-    ESP_ERROR_CHECK(tcpip_adapter_get_sta_list(&wifi_sta_list, &adapter_sta_list));
+    ESP_ERROR_CHECK(esp_wifi_ap_get_sta_list_with_ip(&wifi_sta_list, &adapter_sta_list));
 
     cJSON *root = cJSON_CreateObject();
     cJSON_AddStringToObject(root, "ssid", ssid);
     cJSON_AddStringToObject(root, "gatewayAddress", gateway_address);
     cJSON_AddStringToObject(root, "ipAddress", ip_address);
     cJSON_AddStringToObject(root, "dns", (has_static_ip || IsCustomDnsEnable) ? customDNSip : dns);
-    cJSON_AddStringToObject(root, "filterListType", (IsAllowList ? "Allow":"Deny"));
+    cJSON_AddStringToObject(root, "filterListType", (IsAllowList ? "Allow" : "Deny"));
     cJSON_AddNumberToObject(root, "rss", rssi);
     cJSON_AddBoolToObject(root, "wifiAuthFail", IsWifiAuthFail);
     cJSON *clients = cJSON_AddArrayToObject(root, "clients");
     cJSON *json = retrieve_mac_addresses_as_json();
 
-    for (int i = 0; i < adapter_sta_list.num; i++)
-    {
-        tcpip_adapter_sta_info_t station = adapter_sta_list.sta[i];
+    // Iterate over the connected stations
+    for (int i = 0; i < wifi_sta_list.num; i++) {
+        esp_netif_pair_mac_ip_t station = adapter_sta_list.sta[i];
         cJSON *client = cJSON_CreateObject();
-        cJSON_AddStringToObject(client, "ipAddress", ip4addr_ntoa((ip4_addr_t *)&(station.ip)));
+        cJSON_AddStringToObject(client, "ipAddress", ip4addr_ntoa((const ip4_addr_t *)&(station.ip)));
         char mac_address[18];
         sprintf(mac_address, MACSTR, MAC2STR(station.mac));
         cJSON_AddStringToObject(client, "macAddress", mac_address);
         cJSON_AddItemToArray(clients, client);
         
     }
-    if(json != NULL){
-        cJSON_AddItemToObject(root,"filterList",json);
+    
+    if (json != NULL) {
+        cJSON_AddItemToObject(root, "filterList", json);
     }
     char *my_json_string = cJSON_Print(root);
     cJSON_Delete(root);

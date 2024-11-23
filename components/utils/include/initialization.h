@@ -14,6 +14,7 @@ extern "C"
 #endif
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "esp_err.h"
 #define MAX_LOGIN_ATTEMPTS (5)
 #define LOCK_OUT_TIME_MINUTES (1) // MINUTES
@@ -23,13 +24,13 @@ extern "C"
 #define DEFAULT_ADMIN_PASSWORD "123456789" 
 #define DEFAULT_SSID "ESP32_NAT_Router +"
 
-    bool IsLedEnable, IsWebServerEnable, IsCustomDnsEnable,
+    extern bool IsLedEnable, IsWebServerEnable, IsCustomDnsEnable,
         IsRandomizeMacEnable, IsDarkModeEnable, IsWifiAuthFail, IsMacFilterEnable, IsAllowList;
 
-    char *customDNSip, *authUsername,
+    extern char *customDNSip, *authUsername,
         *authPass, *macAp, *dnsIP, *cache;
-    char currentMAC[18];
-    int max_login_attempts, lock_out_time_minutes;
+    extern char currentMAC[18];
+    extern int max_login_attempts, lock_out_time_minutes;
     esp_err_t parms_init();
 
     typedef struct
@@ -38,7 +39,7 @@ extern "C"
         char *password;
     } basic_auth_info_t;
 
-    basic_auth_info_t auth_info;
+   extern basic_auth_info_t auth_info;
 
 #ifdef __cplusplus
 }

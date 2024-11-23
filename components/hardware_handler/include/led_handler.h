@@ -14,7 +14,7 @@ extern "C"
 #endif
 #include "stdbool.h"
 
-    bool IsLedEnable;
+    extern bool IsLedEnable;
     void start_led_status_task(void);
     void item_selected_success(void);
 

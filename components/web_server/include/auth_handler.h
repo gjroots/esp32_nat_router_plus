@@ -17,8 +17,8 @@ extern "C"
 #include "initialization.h"
 
     esp_err_t authentication_handler(httpd_req_t *req, int url_id_number);
-    int max_login_attempts;
-    int lock_out_time_minutes;
+    extern int max_login_attempts;
+    extern int lock_out_time_minutes;
 
 #ifdef __cplusplus
 }

@@ -18,10 +18,10 @@ extern "C"
 #include <esp_err.h>
 #define JOIN_TIMEOUT_MS (3000)
 
-    EventGroupHandle_t wifi_event_group;
-    const int WIFI_CONNECTED_BIT;
+    extern EventGroupHandle_t wifi_event_group;
+    extern int WIFI_CONNECTED_BIT;
     void wifi_events_register_init(void);
-    bool is_scanning_progress;
+    extern bool is_scanning_progress;
 
 #ifdef __cplusplus
 }

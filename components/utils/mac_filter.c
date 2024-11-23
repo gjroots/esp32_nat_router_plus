@@ -14,6 +14,12 @@
 #include <esp_wifi.h>
 #include <esp_netif.h>
 #include <esp_wifi_types.h>
+#include "utils.h"
+#include "esp_efuse.h" 
+#include "esp_system.h"
+#include "esp_mac.h"
+#include "esp_netif.h" 
+#include "esp_wifi.h"
 
 #include "mac_filter.h"
 #include "initialization.h"
@@ -63,19 +69,15 @@ esp_err_t check_in_filter_list(const uint8_t mac[6]) {
 //-----------------------------------------------------------------------------
 void refresh_mac_filter() {
     wifi_sta_list_t wifi_sta_list;
-    tcpip_adapter_sta_list_t adapter_sta_list;
-    memset(&wifi_sta_list, 0, sizeof(wifi_sta_list));
-    memset(&adapter_sta_list, 0, sizeof(adapter_sta_list));
+    // Get the list of connected stations
     ESP_ERROR_CHECK(esp_wifi_ap_get_sta_list(&wifi_sta_list));
-    ESP_ERROR_CHECK(tcpip_adapter_get_sta_list(&wifi_sta_list, &adapter_sta_list));
 
-    for (int i = 0; i < adapter_sta_list.num; i++) {
-        tcpip_adapter_sta_info_t station = adapter_sta_list.sta[i];
+    for (int i = 0; i < wifi_sta_list.num; i++) {
+        wifi_sta_info_t station = wifi_sta_list.sta[i];
         esp_err_t result = check_in_filter_list(station.mac);
         if (result != ESP_OK) {
-            //printf("Error processing MAC address at index %d\n", i);
+            ESP_LOGE("MAC_FILTER", "Error processing MAC address at index %d", i);
         }
-
     }
 }
 
